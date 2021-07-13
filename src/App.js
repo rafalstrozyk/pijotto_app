@@ -1,9 +1,13 @@
+import Router from './components/Router/Router';
+import Providers from './style/Providers';
+import { GlobalStyle } from './style/globalStyle';
 
 function App() {
   return (
-    <div >
-      <h1>Hello World!</h1>
-    </div>
+    <Providers>
+      <Router />
+      <GlobalStyle />
+    </Providers>
   );
 }
 
