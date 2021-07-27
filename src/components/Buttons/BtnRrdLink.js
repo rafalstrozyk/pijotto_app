@@ -3,7 +3,13 @@ import { Link } from 'react-router-dom';
 
 export default function BtnRrdLink({ children, link }) {
   return (
-    <Button color="primary" component={Link} to={link}>
+    <Button
+      size="small"
+      variant="contained"
+      color="secondary"
+      component={Link}
+      to={link}
+    >
       {children}
     </Button>
   );

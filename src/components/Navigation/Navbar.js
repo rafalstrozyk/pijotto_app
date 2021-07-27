@@ -7,7 +7,7 @@ import { Container } from '../containers/flexbox';
 export default function Navbar() {
   return (
     <div>
-      <AppBar position="static" color="default">
+      <AppBar position="static" color="primary">
         <Toolbar>
           <Container jusContent="space-between" width="100%">
             <Typography variant="h6">Pijjotto</Typography>
