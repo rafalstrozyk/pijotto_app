@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
+  height: ${(props) => props.height};
   width: ${(props) => props.width};
   flex-direction: ${(props) => props.direction};
   flex-wrap: ${(props) => props.wrap};

@@ -44,4 +44,9 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+#root {
+	width: 100%;
+	height: 100%;
+}
 `;
