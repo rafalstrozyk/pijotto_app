@@ -1,9 +1,11 @@
-import { TextField, Button } from '@material-ui/core';
+import { useState } from 'react';
+import { TextField, Button, CircularProgress } from '@material-ui/core';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../../contexts/AuthContext';
 import { Container } from '../containers/flexbox';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 const StyledForm = styled.form`
   width: 25rem;
@@ -23,7 +25,10 @@ const validationSchema = Yup.object({
 });
 
 export default function LoginForm() {
-  const {} = useAuth();
+  const { login } = useAuth();
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const history = useHistory();
 
   const formik = useFormik({
     initialValues: {
@@ -31,13 +36,22 @@ export default function LoginForm() {
       password: '',
     },
     validationSchema,
-    onSubmit: (values) => {
-      console.log('something hapend');
+    onSubmit: async (values) => {
+      try {
+        setError('');
+        setLoading(true);
+        await login(values.email, values.password);
+        history.push('/');
+      } catch {
+        setError('Failed to log in');
+      }
+      setLoading(false);
     },
   });
   return (
     <StyledForm onSubmit={formik.handleSubmit}>
       <StyledContainer direction="column" jusContent="center" aliItems="center">
+        {error && <p>{error}</p>}
         <TextField
           fullWidth
           color="primary"
@@ -70,7 +84,7 @@ export default function LoginForm() {
         />
 
         <Button color="secondary" variant="contained" type="submit">
-          Submit
+          {loading ? <CircularProgress /> : 'Log In'}
         </Button>
       </StyledContainer>
     </StyledForm>

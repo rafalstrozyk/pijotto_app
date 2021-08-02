@@ -2,11 +2,18 @@ import SignUpForm from '../components/inputs/SignUpForm';
 import { Paper, Typography } from '@material-ui/core';
 import { Container } from '../components/containers/flexbox';
 import styled from 'styled-components';
+import ButtonLinkRouterDom from '../components/Buttons/BtnLinkRouterDom';
 
 const StyledPaper = styled(Paper)`
   padding: 20px;
+`;
+
+const StyledPosition = styled.div`
   position: absolute;
-  top: 25%;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
 `;
 
 export default function Register() {
@@ -19,14 +26,25 @@ export default function Register() {
       jusContent="center"
       aliItems="center"
     >
-      <StyledPaper>
+      <StyledPosition>
         <Container direction="column" jusContent="center" aliItems="center">
-          <Typography variant="h4" component="h4">
-            Sign Up
-          </Typography>
-          <SignUpForm />
+          <StyledPaper>
+            <Container direction="column" jusContent="center" aliItems="center">
+              <Typography variant="h4" component="h4">
+                Sign Up
+              </Typography>
+              <SignUpForm />
+            </Container>
+          </StyledPaper>
+          <ButtonLinkRouterDom
+            color="primary"
+            style={{ marginTop: '20px' }}
+            link="/login"
+          >
+            sign in
+          </ButtonLinkRouterDom>
         </Container>
-      </StyledPaper>
+      </StyledPosition>
     </Container>
   );
 }

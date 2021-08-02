@@ -1,9 +1,11 @@
-import { TextField, Button } from '@material-ui/core';
+import { useState } from 'react';
+import { TextField, Button, CircularProgress } from '@material-ui/core';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../../contexts/AuthContext';
 import { Container } from '../containers/flexbox';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 const StyledForm = styled.form`
   width: 25rem;
@@ -28,6 +30,9 @@ const validationSchema = Yup.object({
 
 export default function SignUpForm() {
   const { signup, currentUser } = useAuth();
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const history = useHistory();
 
   const formik = useFormik({
     initialValues: {
@@ -36,72 +41,77 @@ export default function SignUpForm() {
       passwordConfirmation: '',
     },
     validationSchema,
-    onSubmit: (values) => {
-      signup(values.email, values.password);
+    onSubmit: async (values) => {
+      try {
+        setError('');
+        setLoading(true);
+        await signup(values.email, values.password);
+        history.push('/');
+      } catch {
+        setError('Failed to create an account');
+      }
+      setLoading(false);
     },
   });
   return (
-      <StyledForm onSubmit={formik.handleSubmit}>
-        <StyledContainer
-          direction="column"
-          jusContent="center"
-          aliItems="center"
-        >
-          <TextField
-            fullWidth
-            color="primary"
-            id="email"
-            label="e-mail"
-            type="email"
-            error={formik.touched.email && formik.errors.email ? true : false}
-            {...formik.getFieldProps('email')}
-            helperText={
-              formik.touched.email && formik.errors.email
-                ? formik.errors.email
-                : null
-            }
-          />
-          <TextField
-            fullWidth
-            color="primary"
-            id="password"
-            label="password"
-            type="password"
-            error={
-              formik.touched.password && formik.errors.password ? true : false
-            }
-            {...formik.getFieldProps('password')}
-            helperText={
-              formik.touched.password && formik.errors.password
-                ? formik.errors.password
-                : null
-            }
-          />
-          <TextField
-            fullWidth
-            color="primary"
-            id="passwordConfirmation"
-            label="repeat password"
-            type="password"
-            error={
-              formik.touched.passwordConfirmation &&
-              formik.errors.passwordConfirmation
-                ? true
-                : false
-            }
-            {...formik.getFieldProps('passwordConfirmation')}
-            helperText={
-              formik.touched.passwordConfirmation &&
-              formik.errors.passwordConfirmation
-                ? formik.errors.passwordConfirmation
-                : null
-            }
-          />
+    <StyledForm onSubmit={formik.handleSubmit}>
+      <StyledContainer direction="column" jusContent="center" aliItems="center">
+        {error && <p>{error}</p>}
+        <TextField
+          fullWidth
+          color="primary"
+          id="email"
+          label="e-mail"
+          type="email"
+          error={formik.touched.email && formik.errors.email ? true : false}
+          {...formik.getFieldProps('email')}
+          helperText={
+            formik.touched.email && formik.errors.email
+              ? formik.errors.email
+              : null
+          }
+        />
+        <TextField
+          fullWidth
+          color="primary"
+          id="password"
+          label="password"
+          type="password"
+          error={
+            formik.touched.password && formik.errors.password ? true : false
+          }
+          {...formik.getFieldProps('password')}
+          helperText={
+            formik.touched.password && formik.errors.password
+              ? formik.errors.password
+              : null
+          }
+        />
+        <TextField
+          fullWidth
+          color="primary"
+          id="passwordConfirmation"
+          label="repeat password"
+          type="password"
+          error={
+            formik.touched.passwordConfirmation &&
+            formik.errors.passwordConfirmation
+              ? true
+              : false
+          }
+          {...formik.getFieldProps('passwordConfirmation')}
+          helperText={
+            formik.touched.passwordConfirmation &&
+            formik.errors.passwordConfirmation
+              ? formik.errors.passwordConfirmation
+              : null
+          }
+        />
 
-          <Button color="secondary" variant="contained" type="submit">
-            Submit
-          </Button>
-        </StyledContainer>
-      </StyledForm>
+        <Button color="secondary" variant="contained" type="submit">
+          {loading ? <CircularProgress /> : 'Submit'}
+        </Button>
+      </StyledContainer>
+    </StyledForm>
   );
 }
