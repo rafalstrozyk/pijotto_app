@@ -3,6 +3,7 @@ import { TextField, Button, CircularProgress } from '@material-ui/core';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../../contexts/AuthContext';
+import { useFirestore } from '../../contexts/FirestoreContext';
 import { Container } from '../containers/flexbox';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
@@ -17,6 +18,10 @@ const StyledContainer = styled(Container)`
 `;
 const validationSchema = Yup.object({
   email: Yup.string().email('Invalid email address').required('Required'),
+  nick: Yup.string()
+    .min(3, 'Must be 3 characters or more')
+    .max(15, 'Must be 15 characters or less')
+    .required('Required'),
   password: Yup.string()
     .min(6, 'Must be 6 characters or more')
     .max(20, 'Must be 20 characters or less')
@@ -30,6 +35,7 @@ const validationSchema = Yup.object({
 
 export default function SignUpForm() {
   const { signup, currentUser } = useAuth();
+  const { createUser } = useFirestore();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -37,6 +43,7 @@ export default function SignUpForm() {
   const formik = useFormik({
     initialValues: {
       email: '',
+      nick: '',
       password: '',
       passwordConfirmation: '',
     },
@@ -46,6 +53,7 @@ export default function SignUpForm() {
         setError('');
         setLoading(true);
         await signup(values.email, values.password);
+        await createUser({email: values.email, nick: values.nick})
         history.push('/');
       } catch {
         setError('Failed to create an account');
@@ -68,6 +76,20 @@ export default function SignUpForm() {
           helperText={
             formik.touched.email && formik.errors.email
               ? formik.errors.email
+              : null
+          }
+        />
+        <TextField
+          fullWidth
+          color="primary"
+          id="nick"
+          label="nick"
+          type="text"
+          error={formik.touched.nick && formik.errors.nick ? true : false}
+          {...formik.getFieldProps('nick')}
+          helperText={
+            formik.touched.nick && formik.errors.nick
+              ? formik.errors.nick
               : null
           }
         />

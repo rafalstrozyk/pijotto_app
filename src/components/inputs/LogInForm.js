@@ -6,6 +6,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { Container } from '../containers/flexbox';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
+import { useFirestore } from '../../contexts/FirestoreContext';
 
 const StyledForm = styled.form`
   width: 25rem;

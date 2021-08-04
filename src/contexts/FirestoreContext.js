@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { firestore } from '../firebase/firebase';
+import { useAuth } from './AuthContext';
 
 const FirestoreContext = createContext();
 
@@ -8,34 +9,68 @@ export function useFirestore() {
 }
 
 export function FirestoreProvider({ children }) {
+  const { currentUser } = useAuth();
   const [allPosts, setAllPosts] = useState([]);
+  const [userPersonalData, setUserPersonalData] = useState();
 
-  async function getData() {
+  useEffect(() => {
+    firestore.collection('posts').onSnapshot((snapshot) => {
+      setAllPosts(snapshot.docs.map(doc => doc.data()))
+    });
+  }, []);
+
+  useEffect(() => {
+    if (currentUser) {
+      getUserPersonalData(currentUser.email);
+    }
+  }, [currentUser]);
+
+  async function getUserPersonalData(email) {
+    setUserPersonalData();
     await firestore
-      .collection('posts')
-      .limit(25)
-      .onSnapshot((snapshot) => {
-        setAllPosts([]);
-        const newArray = [];
-        snapshot.forEach((doc) => {
-          newArray.push({ ...doc.data(), id: doc.id });
+      .collection('users')
+      .where('email', '==', email)
+      .limit(1)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          setUserPersonalData(doc.data());
         });
-        setAllPosts(newArray);
       });
   }
 
-  function sendPost(data, idUser) {
-    firestore.collection('posts').add({
-      created: new Date(),
-      ...data,
-      idUser,
+  function clearUserPersonalData() {
+    setUserPersonalData();
+  }
+
+  async function createUser(user) {
+    setUserPersonalData();
+    await firestore.collection('users').add({
+      nick: user.nick,
+      email: user.email,
     });
   }
 
+  function sendPost(data) {
+    if (currentUser) {
+      firestore.collection('posts').add({
+        created: new Date(),
+        ...data,
+        userId: currentUser.uid,
+        nick: userPersonalData.nick,
+        likes: 0,
+        coments: {}
+      });
+    }
+  }
+
   const value = {
-    getData,
     sendPost,
     allPosts,
+    createUser,
+    userPersonalData,
+    getUserPersonalData,
+    clearUserPersonalData,
   };
 
   return (
