@@ -34,7 +34,7 @@ const validationSchema = Yup.object({
 });
 
 export default function SignUpForm() {
-  const { signup, currentUser } = useAuth();
+  const { signup } = useAuth();
   const { createUser } = useFirestore();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -53,7 +53,7 @@ export default function SignUpForm() {
         setError('');
         setLoading(true);
         await signup(values.email, values.password);
-        await createUser({email: values.email, nick: values.nick})
+        await createUser({ email: values.email, nick: values.nick });
         history.push('/');
       } catch {
         setError('Failed to create an account');

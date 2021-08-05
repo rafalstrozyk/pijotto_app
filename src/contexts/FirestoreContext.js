@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { firestore } from '../firebase/firebase';
 import { useAuth } from './AuthContext';
+import { sortDateArray, formateDateArray } from '../functions/sortDateArray';
 
 const FirestoreContext = createContext();
 
@@ -15,7 +16,13 @@ export function FirestoreProvider({ children }) {
 
   useEffect(() => {
     firestore.collection('posts').onSnapshot((snapshot) => {
-      setAllPosts(snapshot.docs.map(doc => doc.data()))
+      const nonSortedArray = snapshot.docs.map((doc) => doc.data());
+      setAllPosts(
+        formateDateArray(
+          sortDateArray(nonSortedArray),
+          'dddd, MMMM Do YYYY, h:mm a'
+        )
+      );
     });
   }, []);
 
@@ -59,7 +66,8 @@ export function FirestoreProvider({ children }) {
         userId: currentUser.uid,
         nick: userPersonalData.nick,
         likes: 0,
-        coments: {}
+        likers: [],
+        coments: {},
       });
     }
   }

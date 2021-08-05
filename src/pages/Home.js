@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react';
-import { useAuth } from '../contexts/AuthContext';
 import { useFirestore } from '../contexts/FirestoreContext';
 import NewPostForm from '../components/inputs/NewPostForm';
 import { Container } from '../components/containers/flexbox';
 import styled from 'styled-components';
+import PostCard from '../components/PostCard';
 
 const StyledNewPostForm = styled(NewPostForm)`
   width: 100%;
@@ -28,11 +27,15 @@ export default function Home() {
           <Container jusContent="center">
             <StyledNewPostForm />
           </Container>
+          {allPosts.length > 0 &&
+            allPosts.map((item) => (
+              <StyledContainerWitchMargin key={item.id} width="100%">
+                <PostCard post={item} />
+              </StyledContainerWitchMargin>
+            ))}
         </StyledMaxWidth>
       </StyledContainerWitchMargin>
       {console.log(allPosts)}
-      {allPosts.length > 0 &&
-        allPosts.map((item) => <p key={item.id}>{item.text}</p>)}
     </div>
   );
 }
