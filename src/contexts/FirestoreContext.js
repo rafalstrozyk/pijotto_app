@@ -3,6 +3,7 @@ import firebase from 'firebase/app';
 import { firestore } from '../firebase/firebase';
 import { useAuth } from './AuthContext';
 import { sortDateArray, formateDateArray } from '../functions/sortDateArray';
+import {booleanArrayFindObject} from '../functions/booleanArrayFind';
 
 const FirestoreContext = createContext();
 
@@ -80,7 +81,7 @@ export function FirestoreProvider({ children }) {
 
   function likePost(post) {
     if (currentUser) {
-      if (!post.likers.find((liker) => liker.userId === currentUser.uid)) {
+      if (!booleanArrayFindObject(post.likers, currentUser.uid, 'userId')) {
         firestore
           .collection('posts')
           .doc(post.id)
