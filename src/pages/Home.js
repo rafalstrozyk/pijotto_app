@@ -35,7 +35,6 @@ export default function Home() {
             ))}
         </StyledMaxWidth>
       </StyledContainerWitchMargin>
-      {console.log(allPosts)}
     </div>
   );
 }

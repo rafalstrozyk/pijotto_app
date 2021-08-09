@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import firebase from 'firebase/app';
 import { firestore } from '../firebase/firebase';
 import { useAuth } from './AuthContext';
 import { sortDateArray, formateDateArray } from '../functions/sortDateArray';
@@ -14,9 +15,12 @@ export function FirestoreProvider({ children }) {
   const [allPosts, setAllPosts] = useState([]);
   const [userPersonalData, setUserPersonalData] = useState();
 
+  // get all posts
   useEffect(() => {
     firestore.collection('posts').onSnapshot((snapshot) => {
-      const nonSortedArray = snapshot.docs.map((doc) => doc.data());
+      const nonSortedArray = snapshot.docs.map((doc) => {
+        return { ...doc.data(), id: doc.id };
+      });
       setAllPosts(
         formateDateArray(
           sortDateArray(nonSortedArray),
@@ -32,6 +36,7 @@ export function FirestoreProvider({ children }) {
     }
   }, [currentUser]);
 
+  // ***USER***
   async function getUserPersonalData(email) {
     setUserPersonalData();
     await firestore
@@ -58,6 +63,7 @@ export function FirestoreProvider({ children }) {
     });
   }
 
+  // ***POSTS***
   function sendPost(data) {
     if (currentUser) {
       firestore.collection('posts').add({
@@ -72,7 +78,33 @@ export function FirestoreProvider({ children }) {
     }
   }
 
+  function likePost(post) {
+    if (currentUser) {
+      if (!post.likers.find((liker) => liker.userId === currentUser.uid)) {
+        firestore
+          .collection('posts')
+          .doc(post.id)
+          .update({
+            likes: post.likes + 1,
+            likers: firebase.firestore.FieldValue.arrayUnion({
+              userId: currentUser.uid,
+              nick: userPersonalData.nick,
+            }),
+          })
+          .then(() => {
+            console.log('successfully like it !!');
+          })
+          .catch((error) => {
+            console.error('Error updating ducument: ', error);
+          });
+      } else {
+        console.log('You like it !!');
+      }
+    }
+  }
+
   const value = {
+    likePost,
     sendPost,
     allPosts,
     createUser,
