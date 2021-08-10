@@ -3,7 +3,7 @@ import firebase from 'firebase/app';
 import { firestore } from '../firebase/firebase';
 import { useAuth } from './AuthContext';
 import { sortDateArray, formateDateArray } from '../functions/sortDateArray';
-import {booleanArrayFindObject} from '../functions/booleanArrayFind';
+import { booleanArrayFindObject } from '../functions/booleanArrayFind';
 
 const FirestoreContext = createContext();
 
@@ -79,6 +79,38 @@ export function FirestoreProvider({ children }) {
     }
   }
 
+  function editPost(post, newText) {
+    if (currentUser && currentUser.uid === post.userId) {
+      firestore
+        .collection('posts')
+        .doc(post.id)
+        .update({
+          text: newText,
+        })
+        .then(() => {
+          console.log('successfully edited post!');
+        })
+        .catch((error) => {
+          console.error('Error updating ducument: ', error);
+        });
+    }
+  }
+
+  function deletePost(post) {
+    if (currentUser && currentUser.uid === post.userId) {
+      firestore
+        .collection('posts')
+        .doc(post.id)
+        .delete()
+        .then(() => {
+          console.log('Document succesfully deleted!');
+        })
+        .catch((error) => {
+          console.log('Error removing document: ', error);
+        });
+    }
+  }
+
   function likePost(post) {
     if (currentUser) {
       if (!booleanArrayFindObject(post.likers, currentUser.uid, 'userId')) {
@@ -99,12 +131,30 @@ export function FirestoreProvider({ children }) {
             console.error('Error updating ducument: ', error);
           });
       } else {
-        console.log('You like it !!');
+        // it work?
+        firestore
+          .collection('posts')
+          .doc(post.id)
+          .update({
+            likes: post.likes - 1,
+            likers: firebase.firestore.FieldValue.arrayRemove({
+              userId: currentUser.uid,
+              nick: userPersonalData.nick,
+            }),
+          })
+          .then(() => {
+            console.log('successfully unlike it !!');
+          })
+          .catch((error) => {
+            console.error('Error updating ducument: ', error);
+          });
       }
     }
   }
 
   const value = {
+    deletePost,
+    editPost,
     likePost,
     sendPost,
     allPosts,
