@@ -14,7 +14,7 @@ const validationSchema = Yup.object({
     .required(),
 });
 
-const StyledButton = styled(Button)`
+const StyledContainerButton = styled(Container)`
   margin-top: 10px;
 `;
 
@@ -42,6 +42,7 @@ export default function NewPostForm({ className }) {
       } catch {
         setError('Something went wrong');
       }
+      values.text = '';
       setLoading(false);
     },
   });
@@ -53,16 +54,17 @@ export default function NewPostForm({ className }) {
         fullWidth
         id="text"
         label="Post content"
+        color="secondary"
         multiline
         rows={3}
         variant="outlined"
         {...formik.getFieldProps('text')}
       />
-      <Container jusContent="center">
-        <StyledButton color="secondary" variant="contained" type="submit">
+      <StyledContainerButton jusContent="center">
+        <Button color="secondary" variant="contained" type="submit">
           {loading ? <CircularProgress /> : 'Post'}
-        </StyledButton>
-      </Container>
+        </Button>
+      </StyledContainerButton>
     </form>
   );
 }

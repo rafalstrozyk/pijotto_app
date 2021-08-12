@@ -28,6 +28,8 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
+	background-color: ${({ theme }) => theme.palette.primary.light};
+	color: ${({ theme }) => theme.palette.primary.contrastText};
 }
 ol, ul {
 	list-style: none;

@@ -14,8 +14,13 @@ const validationSchema = Yup.object({
     .required(),
 });
 
-const StyledButton = styled(Button)`
+const StyledContainerButtons = styled(Container)`
   margin-top: 10px;
+  > * {
+    &:last-child {
+      margin-left: 10px;
+    }
+  }
 `;
 
 export default function EditPostForm({ className, post, isEditFunc }) {
@@ -60,18 +65,18 @@ export default function EditPostForm({ className, post, isEditFunc }) {
         variant="outlined"
         {...formik.getFieldProps('text')}
       />
-      <Container jusContent="center">
-        <StyledButton color="secondary" variant="contained" type="submit">
+      <StyledContainerButtons jusContent="center">
+        <Button color="secondary" variant="contained" type="submit">
           {loading ? <CircularProgress /> : 'Ok'}
-        </StyledButton>
-        <StyledButton
+        </Button>
+        <Button
           onClick={() => isEditFunc(false)}
           color="secondary"
           variant="contained"
         >
           Cancel
-        </StyledButton>
-      </Container>
+        </Button>
+      </StyledContainerButtons>
     </form>
   );
 }

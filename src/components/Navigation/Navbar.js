@@ -7,7 +7,7 @@ import { Container } from '../containers/flexbox';
 import { useAuth } from '../../contexts/AuthContext';
 import { useFirestore } from '../../contexts/FirestoreContext';
 
-export default function Navbar() {
+export default function Navbar({ ...rest }) {
   const { currentUser, logout } = useAuth();
   const { userPersonalData } = useFirestore();
 
@@ -15,7 +15,7 @@ export default function Navbar() {
     logout();
   }
   return (
-    <div>
+    <div {...rest}>
       <AppBar position="static" color="primary">
         <Toolbar>
           <Container jusContent="space-between" width="100%">
