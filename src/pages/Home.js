@@ -9,8 +9,10 @@ const StyledNewPostForm = styled(NewPostForm)`
   max-width: 500px;
 `;
 const StyledMaxWidth = styled.div`
-  max-width: 80vw;
   width: 100%;
+  @media only screen and (min-width: 480px) {
+    max-width: 80vw;
+  }
 `;
 
 const StyledContainerWitchMargin = styled(Container)`
@@ -19,16 +21,20 @@ const StyledContainerWitchMargin = styled(Container)`
 
 const StyledContainerPosts = styled(Container)`
   > * {
-    margin-top: 30px;
-
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-top: 10px;
+    @media only screen and (min-width: 480px) {
+      margin-top: 30px;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
   }
 `;
 
 const StyledPostCard = styled(PostCard)`
   width: 100%;
-  max-width: calc(1200px / 4);
+  @media only screen and (min-width: 480px) {
+    max-width: calc(1200px / 4);
+  }
 `;
 
 export default function Home() {
