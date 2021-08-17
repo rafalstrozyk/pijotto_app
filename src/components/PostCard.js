@@ -16,6 +16,10 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
+import CommentBox from './CommentBox';
+import { Container } from './containers/flexbox';
+import Modal from './Modal';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,12 +31,19 @@ export default function PostCard({ post, ...rest }) {
   const { likePost, deletePost } = useFirestore();
   const { currentUser } = useAuth();
   const [edited, setEdited] = useState(false);
+  const [openCommentBox, setOpenCommentBox] = useState(false);
   const classes = useStyles();
   function handleLike() {
     likePost(post);
   }
   function handleDelete() {
     deletePost(post);
+  }
+  function handleOpenCommentBox() {
+    setOpenCommentBox(true);
+  }
+  function handleCloseCommentBox() {
+    setOpenCommentBox(false);
   }
 
   return (
@@ -80,6 +91,13 @@ export default function PostCard({ post, ...rest }) {
           >
             {post.likes}
           </Typography>
+          <IconButton color="primary" onClick={handleOpenCommentBox}>
+            <ChatBubbleIcon />
+          </IconButton>
+
+          <Modal open={openCommentBox} setOpen={setOpenCommentBox}>
+            <CommentBox post={post} />
+          </Modal>
 
           {currentUser && currentUser.uid === post.userId && (
             <div>
