@@ -2,11 +2,18 @@ import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import TextField from '@material-ui/core/TextField';
-import IconButton from '@material-ui/core/IconButton';
 import { Container } from '../containers/flexbox';
 import SendIcon from '@material-ui/icons/Send';
 import { useFirestore } from '../../contexts/FirestoreContext';
 import Button from '@material-ui/core/Button';
+import CancelIcon from '@material-ui/icons/Cancel';
+import styled from 'styled-components';
+
+const StyledContainer = styled(Container)`
+  > *:not(:first-child) {
+    margin-left: 10px;
+  }
+`;
 
 const validationSchema = Yup.object({
   content: Yup.string()
@@ -15,35 +22,39 @@ const validationSchema = Yup.object({
     .required(),
 });
 
-export default function NewCommentForm({ postId }) {
-  const { sendCommentForPost } = useFirestore();
+export default function EditCommentForm({ comment, postId, setIsOpen }) {
+  const { editCommentsPost } = useFirestore();
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
+  function handleIsOpen() {
+    setIsOpen(false);
+  }
+
   const formik = useFormik({
     initialValues: {
-      content: '',
+      content: comment.content,
     },
     validationSchema,
     onSubmit: async (values) => {
-      console.log('test comment');
       setError(null);
       try {
         setLoading(true);
-        await sendCommentForPost({ postId, content: values.content });
+        await editCommentsPost({ comment, postId, content: values.content });
       } catch {
         setError('Something went wrong');
       }
       setLoading(false);
+      setIsOpen(false);
       values.content = '';
     },
   });
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <Container jusContent="center" aliItems="center">
+    <form style={{ width: '100%' }} onSubmit={formik.handleSubmit}>
+      <StyledContainer jusContent="space-between" aliItems="center">
         {error && <p>Error!!</p>}
         {loading ? (
-          <p>Sending message...</p>
+          <p>Editing comment...</p>
         ) : (
           <>
             <TextField
@@ -58,14 +69,24 @@ export default function NewCommentForm({ postId }) {
             <Button
               color="primary"
               type="submit"
+              size="small"
               variant="contained"
               startIcon={<SendIcon />}
             >
               Send
             </Button>
+            <Button
+              color="primary"
+              size="small"
+              variant="contained"
+              onClick={handleIsOpen}
+              startIcon={<CancelIcon />}
+            >
+              Candel
+            </Button>
           </>
         )}
-      </Container>
+      </StyledContainer>
     </form>
   );
 }

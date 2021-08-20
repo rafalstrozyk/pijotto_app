@@ -11,6 +11,9 @@ export function useFirestore() {
   return useContext(FirestoreContext);
 }
 
+const postsRef = firestore.collection('posts');
+const usersRef = firestore.collection('users');
+
 export function FirestoreProvider({ children }) {
   const { currentUser } = useAuth();
   const [allPosts, setAllPosts] = useState([]);
@@ -18,7 +21,7 @@ export function FirestoreProvider({ children }) {
 
   // get all posts
   useEffect(() => {
-    firestore.collection('posts').onSnapshot((snapshot) => {
+    postsRef.onSnapshot((snapshot) => {
       const nonSortedArray = snapshot.docs.map((doc) => {
         return { ...doc.data(), id: doc.id };
       });
@@ -40,8 +43,7 @@ export function FirestoreProvider({ children }) {
   // ***USER***
   async function getUserPersonalData(email) {
     setUserPersonalData();
-    await firestore
-      .collection('users')
+    await usersRef
       .where('email', '==', email)
       .limit(1)
       .get()
@@ -58,7 +60,7 @@ export function FirestoreProvider({ children }) {
 
   async function createUser(user) {
     setUserPersonalData();
-    await firestore.collection('users').add({
+    await usersRef.add({
       nick: user.nick,
       email: user.email,
     });
@@ -67,7 +69,7 @@ export function FirestoreProvider({ children }) {
   // ***POSTS***
   function sendPost(data) {
     if (currentUser) {
-      firestore.collection('posts').add({
+      postsRef.add({
         created: new Date(),
         ...data,
         userId: currentUser.uid,
@@ -81,8 +83,7 @@ export function FirestoreProvider({ children }) {
 
   function editPost(post, newText) {
     if (currentUser && currentUser.uid === post.userId) {
-      firestore
-        .collection('posts')
+      postsRef
         .doc(post.id)
         .update({
           text: newText,
@@ -98,8 +99,7 @@ export function FirestoreProvider({ children }) {
 
   function deletePost(post) {
     if (currentUser && currentUser.uid === post.userId) {
-      firestore
-        .collection('posts')
+      postsRef
         .doc(post.id)
         .delete()
         .then(() => {
@@ -114,8 +114,7 @@ export function FirestoreProvider({ children }) {
   function likePost(post) {
     if (currentUser) {
       if (!booleanArrayFindObject(post.likers, currentUser.uid, 'userId')) {
-        firestore
-          .collection('posts')
+        postsRef
           .doc(post.id)
           .update({
             likes: post.likes + 1,
@@ -131,9 +130,7 @@ export function FirestoreProvider({ children }) {
             console.error('Error updating ducument: ', error);
           });
       } else {
-        // it work?
-        firestore
-          .collection('posts')
+        postsRef
           .doc(post.id)
           .update({
             likes: post.likes - 1,
@@ -152,7 +149,66 @@ export function FirestoreProvider({ children }) {
     }
   }
 
+  function sendCommentForPost(data) {
+    postsRef
+      .doc(data.postId)
+      .collection('comments')
+      .add({
+        created: new Date(),
+        content: data.content,
+        userId: currentUser.uid,
+        nick: userPersonalData.nick,
+      })
+      .then(() => console.log('succes add coment!!'))
+      .catch((error) => console.error('Error add comment: ', error));
+  }
+
+  function getCommentsPost(postId, setCommentsFunc) {
+    postsRef
+      .doc(postId)
+      .collection('comments')
+      .onSnapshot((snapshot) => {
+        const nonSortedArray = snapshot.docs.map((doc) => {
+          return { ...doc.data(), id: doc.id };
+        });
+        setCommentsFunc(
+          formateDateArray(
+            sortDateArray(nonSortedArray),
+            'dddd, MMMM Do YYYY, h:mm a'
+          )
+        );
+      });
+  }
+
+  function editCommentsPost(data) {
+    if (currentUser.uid === data.comment.userId) {
+      postsRef
+        .doc(data.postId)
+        .collection('comments')
+        .doc(data.comment.id)
+        .update({ content: data.content })
+        .then(() => console.log('succes edit comment!'))
+        .catch((error) => console.error('error eddit comment: ', error));
+    }
+  }
+
+  function deleteCommentPost(postId, comment) {
+    if (currentUser.uid === comment.userId) {
+      postsRef
+        .doc(postId)
+        .collection('comments')
+        .doc(comment.id)
+        .delete()
+        .then(() => console.log('success delete comment'))
+        .catch((error) => console.error('error on delete comment: ', error));
+    }
+  }
+
   const value = {
+    editCommentsPost,
+    deleteCommentPost,
+    getCommentsPost,
+    sendCommentForPost,
     deletePost,
     editPost,
     likePost,

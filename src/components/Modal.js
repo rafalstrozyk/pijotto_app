@@ -13,6 +13,7 @@ const StyledModal = styled.div`
   transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
+  align-items: baseline;
   > * {
     margin-top: 10vh;
   }

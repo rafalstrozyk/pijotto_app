@@ -17,7 +17,7 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
-import CommentBox from './CommentBox';
+import CommentsBox from './CommentsBox';
 import { Container } from './containers/flexbox';
 import Modal from './Modal';
 
@@ -41,9 +41,6 @@ export default function PostCard({ post, ...rest }) {
   }
   function handleOpenCommentBox() {
     setOpenCommentBox(true);
-  }
-  function handleCloseCommentBox() {
-    setOpenCommentBox(false);
   }
 
   return (
@@ -96,7 +93,7 @@ export default function PostCard({ post, ...rest }) {
           </IconButton>
 
           <Modal open={openCommentBox} setOpen={setOpenCommentBox}>
-            <CommentBox post={post} />
+            <CommentsBox post={post} />
           </Modal>
 
           {currentUser && currentUser.uid === post.userId && (
