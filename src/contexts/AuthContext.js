@@ -19,6 +19,14 @@ export function AuthProvider({ children }) {
     return auth.createUserWithEmailAndPassword(email, password);
   }
 
+  function resetPassword(newPassword) {
+    auth.currentUser.updatePassword(newPassword).then(() => {
+      console.log('succes reset password!')
+    }).catch(error => {
+      console.error('error when reset password: ', error);
+    })
+  }
+
   function logout() {
     return auth.signOut();
   }
@@ -34,6 +42,7 @@ export function AuthProvider({ children }) {
 
   const value = {
     currentUser,
+    resetPassword,
     login,
     signup,
     logout,

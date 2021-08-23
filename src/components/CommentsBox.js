@@ -24,6 +24,9 @@ const StyledCommentsBox = styled.div`
   border-radius: 10px;
   padding: 25px;
   max-height: 80vh;
+  > *:not(:last-child) {
+    margin-top: 10px;
+  }
 `;
 
 export default function CommentsBox({ post }) {

@@ -15,10 +15,6 @@ const StyledMaxWidth = styled.div`
   }
 `;
 
-const StyledContainerWitchMargin = styled(Container)`
-  margin-top: 30px;
-`;
-
 const StyledContainerPosts = styled(Container)`
   > * {
     margin-top: 10px;
@@ -42,7 +38,7 @@ export default function Home() {
 
   return (
     <div>
-      <StyledContainerWitchMargin jusContent="center">
+      <Container jusContent="center">
         <StyledMaxWidth>
           <Container jusContent="center">
             <StyledNewPostForm />
@@ -58,7 +54,7 @@ export default function Home() {
               ))}
           </StyledContainerPosts>
         </StyledMaxWidth>
-      </StyledContainerWitchMargin>
+      </Container>
     </div>
   );
 }

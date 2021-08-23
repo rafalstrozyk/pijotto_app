@@ -18,7 +18,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import CommentsBox from './CommentsBox';
-import { Container } from './containers/flexbox';
 import Modal from './Modal';
 
 const useStyles = makeStyles((theme) => ({

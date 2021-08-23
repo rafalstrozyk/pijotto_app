@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import TextField from '@material-ui/core/TextField';
-import IconButton from '@material-ui/core/IconButton';
 import { Container } from '../containers/flexbox';
 import SendIcon from '@material-ui/icons/Send';
 import { useFirestore } from '../../contexts/FirestoreContext';
@@ -60,6 +59,7 @@ export default function NewCommentForm({ postId }) {
               type="submit"
               variant="contained"
               startIcon={<SendIcon />}
+              style={{ marginLeft: '10px' }}
             >
               Send
             </Button>

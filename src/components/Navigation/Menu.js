@@ -131,9 +131,6 @@ export default function Menu() {
           )}
         </ul>
       </CSSTransition>
-      {/* {isOpen && (
-        
-      )} */}
     </StyledMenu>
   );
 }
