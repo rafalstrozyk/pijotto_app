@@ -8,7 +8,7 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
 const StyledForm = styled.form`
-  width: 25rem;
+  width: 100%;
 `;
 const StyledContainer = styled(Container)`
   > *:not(:last-child) {
@@ -54,7 +54,7 @@ export default function LoginForm() {
         {error && <p>{error}</p>}
         <TextField
           fullWidth
-          color="primary"
+          color="secondary"
           id="email"
           label="e-mail"
           type="email"
@@ -68,7 +68,7 @@ export default function LoginForm() {
         />
         <TextField
           fullWidth
-          color="primary"
+          color="secondary"
           id="password"
           label="password"
           type="password"

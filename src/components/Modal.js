@@ -6,8 +6,8 @@ const StyledModal = styled.div`
   position: fixed;
   z-index: 5000;
   background-color: rgba(34, 34, 34, 0.5);
-  width: 100vw;
-  height: 100vh;
+  width: 110vw;
+  height: 110vh;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -15,7 +15,9 @@ const StyledModal = styled.div`
   justify-content: center;
   align-items: baseline;
   > * {
-    margin-top: 10vh;
+    @media only screen and (min-width: 850px) {
+      margin-top: 15vh;
+    }
   }
 `;
 

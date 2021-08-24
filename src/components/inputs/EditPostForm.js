@@ -63,6 +63,10 @@ export default function EditPostForm({ className, post, isEditFunc }) {
         multiline
         rows={3}
         variant="outlined"
+        error={formik.touched.text && formik.errors.text ? true : false}
+        helperText={
+          formik.touched.text && formik.errors.text ? formik.errors.text : null
+        }
         {...formik.getFieldProps('text')}
       />
       <StyledContainerButtons jusContent="center">

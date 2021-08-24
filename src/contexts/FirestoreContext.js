@@ -17,6 +17,7 @@ const usersRef = firestore.collection('users');
 export function FirestoreProvider({ children }) {
   const { currentUser } = useAuth();
   const [allPosts, setAllPosts] = useState([]);
+  const [userPosts, setUserPosts] = useState([]);
   const [userPersonalData, setUserPersonalData] = useState();
 
   // get all posts
@@ -149,6 +150,25 @@ export function FirestoreProvider({ children }) {
     }
   }
 
+  function getUserPosts() {
+    if (currentUser) {
+      postsRef
+        .where('userId', '==', currentUser.uid)
+        .get()
+        .then((querySnapshot) => {
+          const nonSortedArray = querySnapshot.docs.map((doc) => {
+            return { ...doc.data(), id: doc.id };
+          });
+          setUserPosts(
+            formateDateArray(
+              sortDateArray(nonSortedArray),
+              'dddd, MMMM Do YYYY, h:mm a'
+            )
+          );
+        });
+    }
+  }
+
   function sendCommentForPost(data) {
     postsRef
       .doc(data.postId)
@@ -210,6 +230,8 @@ export function FirestoreProvider({ children }) {
     getCommentsPost,
     sendCommentForPost,
     deletePost,
+    getUserPosts,
+    userPosts,
     editPost,
     likePost,
     sendPost,

@@ -67,7 +67,7 @@ export default function SignUpForm() {
         {error && <p>{error}</p>}
         <TextField
           fullWidth
-          color="primary"
+          color="secondary"
           id="email"
           label="e-mail"
           type="email"
@@ -81,7 +81,7 @@ export default function SignUpForm() {
         />
         <TextField
           fullWidth
-          color="primary"
+          color="secondary"
           id="nick"
           label="nick"
           type="text"
@@ -95,7 +95,7 @@ export default function SignUpForm() {
         />
         <TextField
           fullWidth
-          color="primary"
+          color="secondary"
           id="password"
           label="password"
           type="password"
@@ -111,7 +111,7 @@ export default function SignUpForm() {
         />
         <TextField
           fullWidth
-          color="primary"
+          color="secondary"
           id="passwordConfirmation"
           label="repeat password"
           type="password"

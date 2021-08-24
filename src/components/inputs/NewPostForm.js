@@ -59,6 +59,12 @@ export default function NewPostForm({ className }) {
         rows={3}
         variant="outlined"
         {...formik.getFieldProps('text')}
+        error={formik.touched.text && formik.errors.text ? true : false}
+          helperText={
+            formik.touched.text && formik.errors.text
+              ? formik.errors.text
+              : null
+          }
       />
       <StyledContainerButton jusContent="center">
         <Button color="secondary" variant="contained" type="submit">

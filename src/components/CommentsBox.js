@@ -20,12 +20,17 @@ const StyledCommentsBox = styled.div`
   background-color: ${({ theme }) => theme.palette.secondary.main};
   color: ${({ theme }) => theme.palette.secondary.contrastText};
   max-width: 1200px;
-  width: 800px;
+  width: 100vw;
   border-radius: 10px;
   padding: 25px;
-  max-height: 80vh;
+  height: 100vh;
   > *:not(:last-child) {
     margin-top: 10px;
+  }
+
+  @media only screen and (min-width: 850px) {
+    width: 800px;
+    max-height: 80vh;
   }
 `;
 

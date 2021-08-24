@@ -64,6 +64,14 @@ export default function EditCommentForm({ comment, postId, setIsOpen }) {
               color="primary"
               rows={1}
               variant="outlined"
+              error={
+                formik.touched.content && formik.errors.content ? true : false
+              }
+              helperText={
+                formik.touched.content && formik.errors.content
+                  ? formik.errors.content
+                  : null
+              }
               {...formik.getFieldProps('content')}
             />
             <Button

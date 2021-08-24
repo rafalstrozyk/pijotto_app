@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import styled from 'styled-components';
 import ResetPasswordForm from '../components/inputs/ResetPasswordForm';
 import { useState } from 'react';
+import PostCard from '../components/PostCard';
 
 const StyledContainer = styled(Container)`
   > *:not(:first-child) {
@@ -12,13 +13,28 @@ const StyledContainer = styled(Container)`
   }
 `;
 
+const StyledContainerPosts = styled(Container)`
+  > * {
+    margin-top: 10px;
+    @media only screen and (min-width: 480px) {
+      margin-top: 30px;
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+  }
+`;
+
 export default function User() {
   const { currentUser } = useAuth();
-  const { userPersonalData } = useFirestore();
+  const { userPersonalData, userPosts, getUserPosts } = useFirestore();
   const [isOpenResetPasswordForm, setIsOpenResetPasswordForm] = useState(false);
 
   function handleOpenForm() {
     setIsOpenResetPasswordForm(true);
+  }
+
+  function handleGetUserPosts() {
+    getUserPosts();
   }
 
   return (
@@ -41,9 +57,21 @@ export default function User() {
             <ResetPasswordForm handleIsOpenFunc={setIsOpenResetPasswordForm} />
           )}
 
-          <Button variant="contained" color="secondary">
+          <Button
+            variant="contained"
+            onClick={handleGetUserPosts}
+            color="secondary"
+          >
             All my posts
           </Button>
+          <StyledContainerPosts
+            wrap="true"
+            aliItems="flex-start"
+            jusContent="center"
+          >
+            {userPosts.length > 0 &&
+              userPosts.map((post) => <PostCard key={post.id} post={post} />)}
+          </StyledContainerPosts>
         </>
       )}
     </StyledContainer>
