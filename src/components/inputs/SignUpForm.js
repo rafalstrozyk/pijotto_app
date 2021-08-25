@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 
 const StyledForm = styled.form`
-  width: 25rem;
+  width: 100%;
 `;
 const StyledContainer = styled(Container)`
   > *:not(:last-child) {

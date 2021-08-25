@@ -5,8 +5,11 @@ import styled from 'styled-components';
 import PostCard from '../components/PostCard';
 
 const StyledNewPostForm = styled(NewPostForm)`
-  width: 100%;
-  max-width: 500px;
+  width: 95%;
+  @media only screen and (min-width: 480px) {
+    width: 100%;
+    max-width: 500px;
+  }
 `;
 const StyledMaxWidth = styled.div`
   width: 100%;

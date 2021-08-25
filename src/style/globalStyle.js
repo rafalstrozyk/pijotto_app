@@ -30,6 +30,7 @@ body {
 	line-height: 1;
 	background-color: ${({ theme }) => theme.palette.primary.light};
 	color: ${({ theme }) => theme.palette.primary.contrastText};
+	overflow-y: ${({ state }) => (state.scroll ? 'scroll' : 'hidden')};	
 }
 ol, ul {
 	list-style: none;

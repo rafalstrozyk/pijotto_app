@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import {
   Card,
   CardContent,
@@ -19,6 +19,7 @@ import EditIcon from '@material-ui/icons/Edit';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import CommentsBox from './CommentsBox';
 import Modal from './Modal';
+import { ScrollContext } from '../contexts/ScrollContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,9 +30,14 @@ const useStyles = makeStyles((theme) => ({
 export default function PostCard({ post, ...rest }) {
   const { likePost, deletePost } = useFirestore();
   const { currentUser } = useAuth();
+  const [, dispatch] = useContext(ScrollContext);
   const [edited, setEdited] = useState(false);
   const [openCommentBox, setOpenCommentBox] = useState(false);
   const classes = useStyles();
+
+  useEffect(() => {
+    dispatch({ type: 'change', isScroll: !openCommentBox });
+  }, [openCommentBox, dispatch]);
   function handleLike() {
     likePost(post);
   }
