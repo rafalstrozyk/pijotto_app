@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { TextField, Button, CircularProgress } from '@material-ui/core';
@@ -6,12 +6,13 @@ import { useFirestore } from '../../contexts/FirestoreContext';
 import { useAuth } from '../../contexts/AuthContext';
 import styled from 'styled-components';
 import { Container } from '../containers/flexbox';
+import { AppSatateContext } from '../../contexts/AppStateContext';
+import { appStateVars } from '../../unchangingVars';
 
 const validationSchema = Yup.object({
   text: Yup.string()
     .min(3, 'Must be 6 characters or more')
-    .max(300, '300 it is max characters')
-    .required(),
+    .max(300, '300 it is max characters'),
 });
 
 const StyledContainerButton = styled(Container)`
@@ -21,6 +22,7 @@ const StyledContainerButton = styled(Container)`
 export default function NewPostForm({ className }) {
   const { currentUser } = useAuth();
   const { sendPost } = useFirestore();
+  const [, dispatch] = useContext(AppSatateContext);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -35,15 +37,24 @@ export default function NewPostForm({ className }) {
         setError('');
         if (currentUser) {
           await sendPost(values);
+          dispatch({ type: appStateVars.ALLERT, message: 'Succes send post!' });
+          dispatch({ type: appStateVars.SHOW_ALLERT });
         } else {
           setError('You are not login');
           setLoading(false);
+          dispatch({ type: appStateVars.ALLERT, message: error, isError: true });
+          dispatch({ type: appStateVars.SHOW_ALLERT });
         }
       } catch {
         setError('Something went wrong');
+        dispatch({ type: appStateVars.ALLERT, message: error, isError: true });
+        dispatch({ type: appStateVars.SHOW_ALLERT });
       }
       values.text = '';
       setLoading(false);
+      setTimeout(() => {
+        dispatch({ type: appStateVars.DONT_SHOW_ALLERT });
+      }, 5000);
     },
   });
 
@@ -60,11 +71,9 @@ export default function NewPostForm({ className }) {
         variant="outlined"
         {...formik.getFieldProps('text')}
         error={formik.touched.text && formik.errors.text ? true : false}
-          helperText={
-            formik.touched.text && formik.errors.text
-              ? formik.errors.text
-              : null
-          }
+        helperText={
+          formik.touched.text && formik.errors.text ? formik.errors.text : null
+        }
       />
       <StyledContainerButton jusContent="center">
         <Button color="secondary" variant="contained" type="submit">

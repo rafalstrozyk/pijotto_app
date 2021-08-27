@@ -19,7 +19,9 @@ import EditIcon from '@material-ui/icons/Edit';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import CommentsBox from './CommentsBox';
 import Modal from './Modal';
-import { ScrollContext } from '../contexts/ScrollContext';
+import { AppSatateContext } from '../contexts/AppStateContext';
+import styled from 'styled-components';
+import {appStateVars} from '../unchangingVars'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,16 +29,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const StyledCard = styled(Card)`
+  width: 100%;
+  @media only screen and (min-width: 480px) {
+    max-width: calc(1200px / 4);
+  }
+`;
+
 export default function PostCard({ post, ...rest }) {
   const { likePost, deletePost } = useFirestore();
   const { currentUser } = useAuth();
-  const [, dispatch] = useContext(ScrollContext);
+  const [, dispatch] = useContext(AppSatateContext);
   const [edited, setEdited] = useState(false);
   const [openCommentBox, setOpenCommentBox] = useState(false);
   const classes = useStyles();
 
   useEffect(() => {
-    dispatch({ type: 'change', isScroll: !openCommentBox });
+    dispatch({ type: appStateVars.SCROLL_CHANGE, isScroll: !openCommentBox });
   }, [openCommentBox, dispatch]);
   function handleLike() {
     likePost(post);
@@ -49,7 +58,7 @@ export default function PostCard({ post, ...rest }) {
   }
 
   return (
-    <Card classes={classes} {...rest}>
+    <StyledCard classes={classes} {...rest}>
       <CardHeader title={post.nick} subheader={post.created}></CardHeader>
       <CardContent>
         {edited ? (
@@ -98,7 +107,7 @@ export default function PostCard({ post, ...rest }) {
           </IconButton>
 
           <Modal open={openCommentBox} setOpen={setOpenCommentBox}>
-            <CommentsBox post={post} />
+            <CommentsBox post={post} setOpen={setOpenCommentBox} />
           </Modal>
 
           {currentUser && currentUser.uid === post.userId && (
@@ -113,6 +122,6 @@ export default function PostCard({ post, ...rest }) {
           )}
         </CardActions>
       </CardContent>
-    </Card>
+    </StyledCard>
   );
 }

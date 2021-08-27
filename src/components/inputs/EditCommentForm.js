@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState , useContext} from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import TextField from '@material-ui/core/TextField';
@@ -8,6 +8,8 @@ import { useFirestore } from '../../contexts/FirestoreContext';
 import Button from '@material-ui/core/Button';
 import CancelIcon from '@material-ui/icons/Cancel';
 import styled from 'styled-components';
+import { AppSatateContext } from '../../contexts/AppStateContext';
+import { appStateVars } from '../../unchangingVars';
 
 const StyledContainer = styled(Container)`
   > *:not(:first-child) {
@@ -19,11 +21,11 @@ const validationSchema = Yup.object({
   content: Yup.string()
     .min(3, 'Must be 6 characters or more')
     .max(200, '200 it is max characters')
-    .required(),
 });
 
 export default function EditCommentForm({ comment, postId, setIsOpen }) {
   const { editCommentsPost } = useFirestore();
+  const [, dispatch] = useContext(AppSatateContext);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -41,11 +43,18 @@ export default function EditCommentForm({ comment, postId, setIsOpen }) {
       try {
         setLoading(true);
         await editCommentsPost({ comment, postId, content: values.content });
+        dispatch({ type: appStateVars.ALLERT, message: 'succes edit comment!' });
+          dispatch({ type: appStateVars.SHOW_ALLERT });
       } catch {
         setError('Something went wrong');
+        dispatch({ type: appStateVars.ALLERT, message: error });
+        dispatch({ type: appStateVars.SHOW_ALLERT });
       }
       setLoading(false);
       setIsOpen(false);
+      setTimeout(() => {
+        dispatch({ type: appStateVars.DONT_SHOW_ALLERT });
+      }, 5000);
       values.content = '';
     },
   });

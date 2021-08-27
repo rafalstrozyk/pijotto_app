@@ -19,4 +19,16 @@ export const theme = createTheme({
       secondary: '#407CB8',
     },
   },
+  typography: {
+    fontSize: 14,
+    '@media only screen and (min-width: 1366px)': {
+      fontSize: 17,
+    },
+    '@media only screen and (min-width: 768px)': {
+      fontSize: 16,
+    },
+    '@media only screen and (min-width: 414px)': {
+      fontSize: 15,
+    },
+  },
 });

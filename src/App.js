@@ -3,6 +3,7 @@ import Router from './components/Router/Router';
 import Providers from './components/providers/Providers';
 import Navbar from './components/Navigation/Navbar';
 import styled from 'styled-components';
+import Allert from './components/Allert';
 
 const StyledNavbar = styled(Navbar)`
   position: fixed;
@@ -12,11 +13,11 @@ const StyledNavbar = styled(Navbar)`
 `;
 
 function App() {
-  
   return (
     <Providers>
       <Router>
         <StyledNavbar />
+        <Allert />
       </Router>
       <ComponentsWrapperScrollContext />
     </Providers>

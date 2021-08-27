@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { TextField, Button, CircularProgress } from '@material-ui/core';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -7,6 +7,8 @@ import { useFirestore } from '../../contexts/FirestoreContext';
 import { Container } from '../containers/flexbox';
 import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
+import { AppSatateContext } from '../../contexts/AppStateContext';
+import { appStateVars } from '../../unchangingVars';
 
 const StyledForm = styled.form`
   width: 100%;
@@ -36,6 +38,7 @@ const validationSchema = Yup.object({
 export default function SignUpForm() {
   const { signup } = useAuth();
   const { createUser } = useFirestore();
+  const [, dispatch] = useContext(AppSatateContext);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -54,11 +57,21 @@ export default function SignUpForm() {
         setLoading(true);
         await signup(values.email, values.password);
         await createUser({ email: values.email, nick: values.nick });
+        dispatch({
+          type: appStateVars.ALLERT,
+          message: 'Succes sign up, hello new frend!',
+        });
+        dispatch({ type: appStateVars.SHOW_ALLERT });
         history.push('/');
       } catch {
         setError('Failed to create an account');
+        dispatch({ type: appStateVars.ALLERT, message: error, isError: true });
+        dispatch({ type: appStateVars.SHOW_ALLERT });
       }
       setLoading(false);
+      setTimeout(() => {
+        dispatch({ type: appStateVars.DONT_SHOW_ALLERT });
+      }, 5000);
     },
   });
   return (

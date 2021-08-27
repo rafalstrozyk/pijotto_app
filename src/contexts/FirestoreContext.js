@@ -4,6 +4,7 @@ import { firestore } from '../firebase/firebase';
 import { useAuth } from './AuthContext';
 import { sortDateArray, formateDateArray } from '../functions/sortDateArray';
 import { booleanArrayFindObject } from '../functions/booleanArrayFind';
+import { firebaseVars } from '../unchangingVars';
 
 const FirestoreContext = createContext();
 
@@ -11,8 +12,8 @@ export function useFirestore() {
   return useContext(FirestoreContext);
 }
 
-const postsRef = firestore.collection('posts');
-const usersRef = firestore.collection('users');
+const postsRef = firestore.collection(firebaseVars.posts);
+const usersRef = firestore.collection(firebaseVars.users);
 
 export function FirestoreProvider({ children }) {
   const { currentUser } = useAuth();
@@ -27,10 +28,7 @@ export function FirestoreProvider({ children }) {
         return { ...doc.data(), id: doc.id };
       });
       setAllPosts(
-        formateDateArray(
-          sortDateArray(nonSortedArray),
-          'dddd, MMMM Do YYYY, h:mm a'
-        )
+        formateDateArray(sortDateArray(nonSortedArray), firebaseVars.dateFormat)
       );
     });
   }, []);
@@ -153,7 +151,7 @@ export function FirestoreProvider({ children }) {
   function getUserPosts() {
     if (currentUser) {
       postsRef
-        .where('userId', '==', currentUser.uid)
+        .where(firebaseVars.userId, '==', currentUser.uid)
         .get()
         .then((querySnapshot) => {
           const nonSortedArray = querySnapshot.docs.map((doc) => {
@@ -162,7 +160,7 @@ export function FirestoreProvider({ children }) {
           setUserPosts(
             formateDateArray(
               sortDateArray(nonSortedArray),
-              'dddd, MMMM Do YYYY, h:mm a'
+              firebaseVars.dateFormat
             )
           );
         });
@@ -172,7 +170,7 @@ export function FirestoreProvider({ children }) {
   function sendCommentForPost(data) {
     postsRef
       .doc(data.postId)
-      .collection('comments')
+      .collection(firebaseVars.comments)
       .add({
         created: new Date(),
         content: data.content,
@@ -186,7 +184,7 @@ export function FirestoreProvider({ children }) {
   function getCommentsPost(postId, setCommentsFunc) {
     postsRef
       .doc(postId)
-      .collection('comments')
+      .collection(firebaseVars.comments)
       .onSnapshot((snapshot) => {
         const nonSortedArray = snapshot.docs.map((doc) => {
           return { ...doc.data(), id: doc.id };
@@ -194,7 +192,7 @@ export function FirestoreProvider({ children }) {
         setCommentsFunc(
           formateDateArray(
             sortDateArray(nonSortedArray),
-            'dddd, MMMM Do YYYY, h:mm a'
+            firebaseVars.dateFormat
           )
         );
       });
@@ -204,7 +202,7 @@ export function FirestoreProvider({ children }) {
     if (currentUser.uid === data.comment.userId) {
       postsRef
         .doc(data.postId)
-        .collection('comments')
+        .collection(firebaseVars.comments)
         .doc(data.comment.id)
         .update({ content: data.content })
         .then(() => console.log('succes edit comment!'))
@@ -216,7 +214,7 @@ export function FirestoreProvider({ children }) {
     if (currentUser.uid === comment.userId) {
       postsRef
         .doc(postId)
-        .collection('comments')
+        .collection(firebaseVars.comments)
         .doc(comment.id)
         .delete()
         .then(() => console.log('success delete comment'))

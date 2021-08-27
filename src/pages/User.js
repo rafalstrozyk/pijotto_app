@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext';
 import styled from 'styled-components';
 import ResetPasswordForm from '../components/inputs/ResetPasswordForm';
 import { useState } from 'react';
+import StyledContainerPosts from '../components/StyledComponents/StyledContainerPosts';
 import PostCard from '../components/PostCard';
 
 const StyledContainer = styled(Container)`
@@ -13,16 +14,6 @@ const StyledContainer = styled(Container)`
   }
 `;
 
-const StyledContainerPosts = styled(Container)`
-  > * {
-    margin-top: 10px;
-    @media only screen and (min-width: 480px) {
-      margin-top: 30px;
-      margin-left: 10px;
-      margin-right: 10px;
-    }
-  }
-`;
 
 export default function User() {
   const { currentUser } = useAuth();
@@ -42,9 +33,11 @@ export default function User() {
       {currentUser && userPersonalData && (
         <>
           <div>
-            <Typography variant="h6">nick: {userPersonalData.nick}</Typography>
-            <Typography variant="h6">email: {currentUser.email}</Typography>
-            <Typography variant="h6">uid: {currentUser.uid}</Typography>
+            <Typography variant="body1">
+              nick: {userPersonalData.nick}
+            </Typography>
+            <Typography variant="body1">email: {currentUser.email}</Typography>
+            <Typography variant="body1">uid: {currentUser.uid}</Typography>
           </div>
           <Button
             variant="contained"

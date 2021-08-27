@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { TextField, Button, CircularProgress } from '@material-ui/core';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../../contexts/AuthContext';
 import { Container } from '../containers/flexbox';
 import styled from 'styled-components';
+import { AppSatateContext } from '../../contexts/AppStateContext';
+import { appStateVars } from '../../unchangingVars';
 
 const StyledForm = styled.form`
   width: 20rem;
@@ -22,11 +24,11 @@ const validationSchema = Yup.object({
   password: Yup.string()
     .min(6, 'Must be 6 characters or more')
     .max(20, 'Must be 20 characters or less')
-    .required('Required'),
 });
 
 export default function LoginForm({ handleIsOpenFunc }) {
   const { resetPassword } = useAuth();
+  const [, dispatch] = useContext(AppSatateContext);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -40,12 +42,19 @@ export default function LoginForm({ handleIsOpenFunc }) {
         setError('');
         setLoading(true);
         await resetPassword(values.password);
+        dispatch({ type: appStateVars.ALLERT, message: 'Succes reset password!' });
+        dispatch({ type: appStateVars.SHOW_ALLERT });
       } catch {
-        setError('Failed to reset password');
+        setError('Failed to reset password. Try relog!');
+        dispatch({ type: appStateVars.ALLERT, message: error, isError: true });
+          dispatch({ type: appStateVars.SHOW_ALLERT });
       }
       handleIsOpenFunc(false);
       setLoading(false);
       values.password = '';
+      setTimeout(() => {
+        dispatch({ type: appStateVars.DONT_SHOW_ALLERT });
+      }, 5000);
     },
   });
   return (

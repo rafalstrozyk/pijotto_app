@@ -3,6 +3,7 @@ import NewPostForm from '../components/inputs/NewPostForm';
 import { Container } from '../components/containers/flexbox';
 import styled from 'styled-components';
 import PostCard from '../components/PostCard';
+import StyledContainerPosts from '../components/StyledComponents/StyledContainerPosts';
 
 const StyledNewPostForm = styled(NewPostForm)`
   width: 95%;
@@ -18,46 +19,24 @@ const StyledMaxWidth = styled.div`
   }
 `;
 
-const StyledContainerPosts = styled(Container)`
-  > * {
-    margin-top: 10px;
-    @media only screen and (min-width: 480px) {
-      margin-top: 30px;
-      margin-left: 10px;
-      margin-right: 10px;
-    }
-  }
-`;
-
-const StyledPostCard = styled(PostCard)`
-  width: 100%;
-  @media only screen and (min-width: 480px) {
-    max-width: calc(1200px / 4);
-  }
-`;
-
 export default function Home() {
   const { allPosts } = useFirestore();
 
   return (
-    <div>
-      <Container jusContent="center">
-        <StyledMaxWidth>
-          <Container jusContent="center">
-            <StyledNewPostForm />
-          </Container>
-          <StyledContainerPosts
-            wrap="true"
-            aliItems="flex-start"
-            jusContent="center"
-          >
-            {allPosts.length > 0 &&
-              allPosts.map((item) => (
-                <StyledPostCard key={item.id} post={item} />
-              ))}
-          </StyledContainerPosts>
-        </StyledMaxWidth>
-      </Container>
-    </div>
+    <Container jusContent="center">
+      <StyledMaxWidth>
+        <Container jusContent="center">
+          <StyledNewPostForm />
+        </Container>
+        <StyledContainerPosts
+          wrap="true"
+          aliItems="flex-start"
+          jusContent="center"
+        >
+          {allPosts.length > 0 &&
+            allPosts.map((item) => <PostCard key={item.id} post={item} />)}
+        </StyledContainerPosts>
+      </StyledMaxWidth>
+    </Container>
   );
 }

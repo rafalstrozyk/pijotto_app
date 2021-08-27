@@ -4,16 +4,17 @@ import User from '../../pages/User';
 import Login from '../../pages/Login';
 import Register from '../../pages/Register';
 import PrivateRoute from './PrivateRoute';
+import { routsPathVars } from '../../unchangingVars';
 
 export default function Root() {
   return (
     <Switch>
-      <PrivateRoute exact path="/" component={Home} />
-      <PrivateRoute path="/user" component={User} />
-      <Route path="/login">
+      <PrivateRoute exact path={routsPathVars.home} component={Home} />
+      <PrivateRoute path={routsPathVars.user} component={User} />
+      <Route path={routsPathVars.login}>
         <Login />
       </Route>
-      <Route path="/register">
+      <Route path={routsPathVars.register}>
         <Register />
       </Route>
     </Switch>

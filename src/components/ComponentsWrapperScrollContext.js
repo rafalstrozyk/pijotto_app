@@ -1,9 +1,9 @@
 import { useContext } from 'react';
-import { ScrollContext } from '../contexts/ScrollContext';
+import { AppSatateContext } from '../contexts/AppStateContext';
 import { GlobalStyle } from '../style/globalStyle';
 const ComponentsWrapperScrollContext = () => {
-    const [state] = useContext(ScrollContext);
-  return (<GlobalStyle state={state}/>);
+  const [state] = useContext(AppSatateContext);
+  return <GlobalStyle state={state} />;
 };
 
 export default ComponentsWrapperScrollContext;

@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { TextField, Button, CircularProgress } from '@material-ui/core';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../../contexts/AuthContext';
 import { Container } from '../containers/flexbox';
 import styled from 'styled-components';
+import { AppSatateContext } from '../../contexts/AppStateContext';
+import { appStateVars } from '../../unchangingVars';
 import { useHistory } from 'react-router-dom';
+import { Error } from '@material-ui/icons';
 
 const StyledForm = styled.form`
   width: 100%;
@@ -28,6 +31,7 @@ export default function LoginForm() {
   const { login } = useAuth();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [, dispatch] = useContext(AppSatateContext);
   const history = useHistory();
 
   const formik = useFormik({
@@ -41,11 +45,22 @@ export default function LoginForm() {
         setError('');
         setLoading(true);
         await login(values.email, values.password);
+        dispatch({
+          type: appStateVars.ALLERT,
+          message: 'Succes log in, hello!',
+        });
+        dispatch({ type: appStateVars.SHOW_ALLERT });
         history.push('/');
       } catch {
         setError('Failed to log in');
+        console.log(error);
+        dispatch({ type: appStateVars.ALLERT, message: error, isError: true });
+        dispatch({ type: appStateVars.SHOW_ALLERT });
       }
       setLoading(false);
+      setTimeout(() => {
+        dispatch({ type: appStateVars.DONT_SHOW_ALLERT });
+      }, 5000);
     },
   });
   return (
