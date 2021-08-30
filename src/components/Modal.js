@@ -1,6 +1,8 @@
-import styled from 'styled-components';
 import { useRef } from 'react';
+import PropTypes from 'prop-types';
 import { useOnClickOutside } from '../hooks/useOnClickOutside';
+
+import styled from 'styled-components';
 
 const StyledModal = styled.div`
   position: fixed;
@@ -35,3 +37,9 @@ export default function Modal({ children, open, setOpen }) {
     </>
   );
 }
+
+Modal.propTypes = {
+  children: PropTypes.any,
+  open: PropTypes.bool,
+  setOpen: PropTypes.func,
+};

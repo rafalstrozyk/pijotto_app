@@ -1,9 +1,11 @@
 import LoginForm from '../components/inputs/LogInForm';
-import { Typography } from '@material-ui/core';
-import { Container } from '../components/containers/flexbox';
 import ButtonLinkRouterDom from '../components/Buttons/BtnLinkRouterDom';
 import { useWindowSize } from '../hooks/useWindowSize';
+
+import { Typography } from '@material-ui/core';
+
 import StyledWrapperPosition from '../components/StyledComponents/StyledWrapperPosition';
+import { Container } from '../components/containers/flexbox';
 
 export default function Login() {
   const size = useWindowSize();

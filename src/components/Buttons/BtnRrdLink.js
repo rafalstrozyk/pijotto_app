@@ -1,5 +1,6 @@
+import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import Button  from '@material-ui/core/Button';
 
 export default function BtnRrdLink({
   children,
@@ -17,4 +18,11 @@ export default function BtnRrdLink({
       {children}
     </Button>
   );
+}
+
+BtnRrdLink.propTypes = {
+  link: PropTypes.string,
+  children: PropTypes.any,
+  functionOnClick: PropTypes.func,
+  rest: PropTypes.any
 }

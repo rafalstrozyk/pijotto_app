@@ -1,15 +1,19 @@
-import { useState , useContext} from 'react';
+import { useState, useContext } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import TextField from '@material-ui/core/TextField';
-import { Container } from '../containers/flexbox';
-import SendIcon from '@material-ui/icons/Send';
 import { useFirestore } from '../../contexts/FirestoreContext';
-import Button from '@material-ui/core/Button';
-import CancelIcon from '@material-ui/icons/Cancel';
-import styled from 'styled-components';
 import { AppSatateContext } from '../../contexts/AppStateContext';
 import { appStateVars } from '../../unchangingVars';
+import PropTypes from 'prop-types';
+
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import CancelIcon from '@material-ui/icons/Cancel';
+
+import SendIcon from '@material-ui/icons/Send';
+
+import { Container } from '../containers/flexbox';
+import styled from 'styled-components';
 
 const StyledContainer = styled(Container)`
   > *:not(:first-child) {
@@ -20,7 +24,7 @@ const StyledContainer = styled(Container)`
 const validationSchema = Yup.object({
   content: Yup.string()
     .min(3, 'Must be 6 characters or more')
-    .max(200, '200 it is max characters')
+    .max(200, '200 it is max characters'),
 });
 
 export default function EditCommentForm({ comment, postId, setIsOpen }) {
@@ -43,8 +47,11 @@ export default function EditCommentForm({ comment, postId, setIsOpen }) {
       try {
         setLoading(true);
         await editCommentsPost({ comment, postId, content: values.content });
-        dispatch({ type: appStateVars.ALLERT, message: 'succes edit comment!' });
-          dispatch({ type: appStateVars.SHOW_ALLERT });
+        dispatch({
+          type: appStateVars.ALLERT,
+          message: 'succes edit comment!',
+        });
+        dispatch({ type: appStateVars.SHOW_ALLERT });
       } catch {
         setError('Something went wrong');
         dispatch({ type: appStateVars.ALLERT, message: error });
@@ -107,3 +114,9 @@ export default function EditCommentForm({ comment, postId, setIsOpen }) {
     </form>
   );
 }
+
+EditCommentForm.propTypes = {
+  comment: PropTypes.object,
+  postId: PropTypes.string,
+  setIsOpen: PropTypes.func,
+};

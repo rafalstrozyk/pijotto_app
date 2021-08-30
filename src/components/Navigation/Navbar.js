@@ -1,10 +1,14 @@
+import { useAuth } from '../../contexts/AuthContext';
+import { useFirestore } from '../../contexts/FirestoreContext';
+import PropTypes from 'prop-types';
+
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import { Container } from '../containers/flexbox';
-import { useAuth } from '../../contexts/AuthContext';
-import { useFirestore } from '../../contexts/FirestoreContext';
+
 import Menu from './Menu';
+
+import { Container } from '../containers/flexbox';
 import styled from 'styled-components';
 
 const StyledContainerMenuItemsFlex = styled(Container)`
@@ -45,3 +49,7 @@ export default function Navbar({ ...rest }) {
     </div>
   );
 }
+
+Navbar.propTypes = {
+  rest: PropTypes.any,
+};

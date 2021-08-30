@@ -1,14 +1,18 @@
 import { useState, useContext } from 'react';
-import { TextField, Button, CircularProgress } from '@material-ui/core';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useAuth } from '../../contexts/AuthContext';
 import { useFirestore } from '../../contexts/FirestoreContext';
-import { Container } from '../containers/flexbox';
-import styled from 'styled-components';
 import { useHistory } from 'react-router-dom';
 import { AppSatateContext } from '../../contexts/AppStateContext';
 import { appStateVars } from '../../unchangingVars';
+
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+import { Container } from '../containers/flexbox';
+import styled from 'styled-components';
 
 const StyledForm = styled.form`
   width: 100%;

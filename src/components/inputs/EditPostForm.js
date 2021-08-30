@@ -1,18 +1,23 @@
 import { useState, useContext } from 'react';
 import { useFormik } from 'formik';
+import PropTypes from 'prop-types';
 import * as Yup from 'yup';
-import { TextField, Button, CircularProgress } from '@material-ui/core';
 import { useFirestore } from '../../contexts/FirestoreContext';
 import { useAuth } from '../../contexts/AuthContext';
-import styled from 'styled-components';
-import { Container } from '../containers/flexbox';
 import { AppSatateContext } from '../../contexts/AppStateContext';
 import { appStateVars } from '../../unchangingVars';
+
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+import styled from 'styled-components';
+import { Container } from '../containers/flexbox';
 
 const validationSchema = Yup.object({
   text: Yup.string()
     .min(3, 'Must be 6 characters or more')
-    .max(300, '300 it is max characters')
+    .max(300, '300 it is max characters'),
 });
 
 const StyledContainerButtons = styled(Container)`
@@ -48,7 +53,11 @@ export default function EditPostForm({ className, post, isEditFunc }) {
           setError('You are not login');
           setLoading(false);
           isEditFunc(false);
-          dispatch({ type: appStateVars.ALLERT, message: error, isError: true });
+          dispatch({
+            type: appStateVars.ALLERT,
+            message: error,
+            isError: true,
+          });
           dispatch({ type: appStateVars.SHOW_ALLERT });
         }
       } catch {
@@ -95,3 +104,9 @@ export default function EditPostForm({ className, post, isEditFunc }) {
     </form>
   );
 }
+
+EditPostForm.propTypes = {
+  className: PropTypes.string,
+  post: PropTypes.object,
+  isEditFunc: PropTypes.func,
+};

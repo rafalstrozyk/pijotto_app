@@ -1,5 +1,7 @@
+
+import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+import  Button  from '@material-ui/core/Button';
 
 export default function ButtonLinkRouterDom({ link, children, ...rest }) {
   const history = useHistory();
@@ -12,4 +14,10 @@ export default function ButtonLinkRouterDom({ link, children, ...rest }) {
       {children}
     </Button>
   );
+}
+
+ButtonLinkRouterDom.propTypes = {
+  link: PropTypes.string,
+  children: PropTypes.any,
+  rest: PropTypes.any
 }

@@ -1,8 +1,9 @@
+import styled from 'styled-components';
+
 import ComponentsWrapperScrollContext from './components/ComponentsWrapperScrollContext';
 import Router from './components/Router/Router';
 import Providers from './components/providers/Providers';
 import Navbar from './components/Navigation/Navbar';
-import styled from 'styled-components';
 import Allert from './components/Allert';
 
 const StyledNavbar = styled(Navbar)`

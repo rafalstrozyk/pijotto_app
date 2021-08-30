@@ -1,14 +1,16 @@
+import { useState, useRef } from 'react';
+import { CSSTransition } from 'react-transition-group';
+import { useOnClickOutside } from '../../hooks/useOnClickOutside';
+import { useAuth } from '../../contexts/AuthContext';
+
+import BtnRrdLink from '../Buttons/BtnRrdLink';
+import styled from 'styled-components';
+
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import PersonIcon from '@material-ui/icons/Person';
+import HomeIcon from '@material-ui/icons/Home';
 import IconButton from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
-import styled from 'styled-components';
-import { useState, useRef } from 'react';
-import { useOnClickOutside } from '../../hooks/useOnClickOutside';
-import BtnRrdLink from '../Buttons/BtnRrdLink';
-import { useAuth } from '../../contexts/AuthContext';
-import HomeIcon from '@material-ui/icons/Home';
-import PersonIcon from '@material-ui/icons/Person';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import { CSSTransition } from 'react-transition-group';
 
 const StyledMenu = styled.div`
   position: relative;

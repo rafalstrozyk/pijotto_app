@@ -1,19 +1,21 @@
-import { Container } from '../components/containers/flexbox';
-import { Typography, Button } from '@material-ui/core';
+import { useState } from 'react';
 import { useFirestore } from '../contexts/FirestoreContext';
 import { useAuth } from '../contexts/AuthContext';
-import styled from 'styled-components';
 import ResetPasswordForm from '../components/inputs/ResetPasswordForm';
-import { useState } from 'react';
-import StyledContainerPosts from '../components/StyledComponents/StyledContainerPosts';
 import PostCard from '../components/PostCard';
+import StyledContainerPosts from '../components/StyledComponents/StyledContainerPosts';
+
+import { Container } from '../components/containers/flexbox';
+import styled from 'styled-components';
+
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 const StyledContainer = styled(Container)`
   > *:not(:first-child) {
     margin-top: 20px;
   }
 `;
-
 
 export default function User() {
   const { currentUser } = useAuth();

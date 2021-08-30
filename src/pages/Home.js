@@ -1,9 +1,11 @@
 import { useFirestore } from '../contexts/FirestoreContext';
+
 import NewPostForm from '../components/inputs/NewPostForm';
-import { Container } from '../components/containers/flexbox';
-import styled from 'styled-components';
 import PostCard from '../components/PostCard';
 import StyledContainerPosts from '../components/StyledComponents/StyledContainerPosts';
+
+import { Container } from '../components/containers/flexbox';
+import styled from 'styled-components';
 
 const StyledNewPostForm = styled(NewPostForm)`
   width: 95%;

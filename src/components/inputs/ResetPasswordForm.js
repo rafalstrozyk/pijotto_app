@@ -1,12 +1,17 @@
 import { useState, useContext } from 'react';
-import { TextField, Button, CircularProgress } from '@material-ui/core';
 import { useFormik } from 'formik';
+import PropTypes from 'prop-types';
 import * as Yup from 'yup';
 import { useAuth } from '../../contexts/AuthContext';
-import { Container } from '../containers/flexbox';
-import styled from 'styled-components';
 import { AppSatateContext } from '../../contexts/AppStateContext';
 import { appStateVars } from '../../unchangingVars';
+
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
+import { Container } from '../containers/flexbox';
+import styled from 'styled-components';
 
 const StyledForm = styled.form`
   width: 20rem;
@@ -23,7 +28,7 @@ const StyledContainer = styled(Container)`
 const validationSchema = Yup.object({
   password: Yup.string()
     .min(6, 'Must be 6 characters or more')
-    .max(20, 'Must be 20 characters or less')
+    .max(20, 'Must be 20 characters or less'),
 });
 
 export default function LoginForm({ handleIsOpenFunc }) {
@@ -42,12 +47,15 @@ export default function LoginForm({ handleIsOpenFunc }) {
         setError('');
         setLoading(true);
         await resetPassword(values.password);
-        dispatch({ type: appStateVars.ALLERT, message: 'Succes reset password!' });
+        dispatch({
+          type: appStateVars.ALLERT,
+          message: 'Succes reset password!',
+        });
         dispatch({ type: appStateVars.SHOW_ALLERT });
       } catch {
         setError('Failed to reset password. Try relog!');
         dispatch({ type: appStateVars.ALLERT, message: error, isError: true });
-          dispatch({ type: appStateVars.SHOW_ALLERT });
+        dispatch({ type: appStateVars.SHOW_ALLERT });
       }
       handleIsOpenFunc(false);
       setLoading(false);
@@ -94,3 +102,7 @@ export default function LoginForm({ handleIsOpenFunc }) {
     </StyledForm>
   );
 }
+
+LoginForm.propTypes = {
+  handleIsOpenFunc: PropTypes.func,
+};

@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import firebase from 'firebase/app';
 import { firestore } from '../firebase/firebase';
 import { useAuth } from './AuthContext';
@@ -246,3 +247,7 @@ export function FirestoreProvider({ children }) {
     </FirestoreContext.Provider>
   );
 }
+
+FirestoreProvider.propTypes = {
+  children: PropTypes.any,
+};

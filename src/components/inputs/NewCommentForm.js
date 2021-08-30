@@ -1,13 +1,17 @@
 import { useState, useContext } from 'react';
 import { useFormik } from 'formik';
+import PropTypes from 'prop-types';
 import * as Yup from 'yup';
-import TextField from '@material-ui/core/TextField';
-import { Container } from '../containers/flexbox';
-import SendIcon from '@material-ui/icons/Send';
-import { useFirestore } from '../../contexts/FirestoreContext';
-import Button from '@material-ui/core/Button';
 import { AppSatateContext } from '../../contexts/AppStateContext';
 import { appStateVars } from '../../unchangingVars';
+import { useFirestore } from '../../contexts/FirestoreContext';
+
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
+import SendIcon from '@material-ui/icons/Send';
+
+import { Container } from '../containers/flexbox';
 
 const validationSchema = Yup.object({
   content: Yup.string()
@@ -88,3 +92,7 @@ export default function NewCommentForm({ postId }) {
     </form>
   );
 }
+
+NewCommentForm.propTypes = {
+  postId: PropTypes.string,
+};

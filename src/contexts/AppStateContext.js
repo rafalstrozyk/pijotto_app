@@ -1,4 +1,5 @@
-import { createContext, useReducer, useEffect, useState } from 'react';
+import { createContext, useReducer } from 'react';
+import PropTypes from 'prop-types';
 import { appStateVars } from '../unchangingVars';
 
 const reducer = (state, action) => {
@@ -44,3 +45,7 @@ export function AppStateProvider({ children }) {
     </AppSatateContext.Provider>
   );
 }
+
+AppStateProvider.propTypes = {
+  children: PropTypes.any,
+};

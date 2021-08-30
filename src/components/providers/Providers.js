@@ -1,9 +1,12 @@
 import { ThemeProvider } from 'styled-components';
+import PropTypes from 'prop-types';
 import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
-import { theme } from '../../style/theme';
 import { AuthProvider } from '../../contexts/AuthContext';
 import { FirestoreProvider } from '../../contexts/FirestoreContext';
 import { AppStateProvider } from '../../contexts/AppStateContext';
+
+import { theme } from '../../style/theme';
+
 import { responsiveFontSizes } from '@material-ui/core/styles';
 
 export default function Providers({ children }) {
@@ -22,3 +25,7 @@ export default function Providers({ children }) {
     </AppStateProvider>
   );
 }
+
+Providers.propTypes = {
+  children: PropTypes.any,
+};

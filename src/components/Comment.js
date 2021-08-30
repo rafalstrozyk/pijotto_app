@@ -1,15 +1,19 @@
+import { useState } from 'react';
+import { useAuth } from '../contexts/AuthContext';
+import PropTypes from 'prop-types';
+import { useFirestore } from '../contexts/FirestoreContext';
+import EditCommentForm from './inputs/EditCommentForm';
+
 import ListItem from '@material-ui/core/ListItem';
 import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import Typography from '@material-ui/core/Typography';
-import { Container } from './containers/flexbox';
-import { useState } from 'react';
 import IconButton from '@material-ui/core/IconButton';
+
+import { Container } from './containers/flexbox';
+
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import { useAuth } from '../contexts/AuthContext';
-import { useFirestore } from '../contexts/FirestoreContext';
-import EditCommentForm from './inputs/EditCommentForm';
 
 export default function Comment({ comment, postId }) {
   const { currentUser } = useAuth();
@@ -92,3 +96,8 @@ export default function Comment({ comment, postId }) {
     </>
   );
 }
+
+Comment.propTypes = {
+  comment: PropTypes.object,
+  postId: PropTypes.string,
+};

@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import styled from 'styled-components';
 import { Container } from '../containers/flexbox';
 
@@ -30,3 +32,7 @@ export default function StyledWrapperPosition({ children }) {
     </StyledPosition>
   );
 }
+
+StyledWrapperPosition.propTypes = {
+  children: PropTypes.any,
+};

@@ -1,8 +1,10 @@
 import SignUpForm from '../components/inputs/SignUpForm';
-import { Typography } from '@material-ui/core';
-import { Container } from '../components/containers/flexbox';
 import ButtonLinkRouterDom from '../components/Buttons/BtnLinkRouterDom';
 import { useWindowSize } from '../hooks/useWindowSize';
+
+import { Typography } from '@material-ui/core';
+
+import { Container } from '../components/containers/flexbox';
 import StyledWrapperPosition from '../components/StyledComponents/StyledWrapperPosition';
 
 export default function Register() {

@@ -1,14 +1,18 @@
+import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { useFirestore } from '../contexts/FirestoreContext';
+import NewCommentForm from './inputs/NewCommentForm';
+import Comment from './Comment';
+
 import styled from 'styled-components';
 import { Container } from './containers/flexbox';
-import { useEffect, useState } from 'react';
-import { useFirestore } from '../contexts/FirestoreContext';
+
 import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
+import { makeStyles } from '@material-ui/core/styles';
+
 import IconButton from '@material-ui/core/IconButton';
 import CancelIcon from '@material-ui/icons/Cancel';
-import NewCommentForm from './inputs/NewCommentForm';
-import List from '@material-ui/core/List';
-import Comment from './Comment';
-import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -87,3 +91,8 @@ export default function CommentsBox({ post, setOpen }) {
     </StyledCommentsBox>
   );
 }
+
+CommentsBox.propTypes = {
+  post: PropTypes.object,
+  setOpen: PropTypes.func,
+};
