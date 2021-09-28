@@ -1,6 +1,6 @@
-import { createContext, useContext, useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { auth } from '../firebase/firebase';
+import { createContext, useContext, useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { auth } from "../firebase/firebase";
 
 const AuthContext = createContext();
 
@@ -21,11 +21,14 @@ export function AuthProvider({ children }) {
   }
 
   function resetPassword(newPassword) {
-    auth.currentUser.updatePassword(newPassword).then(() => {
-      console.log('succes reset password!')
-    }).catch(error => {
-      console.error('error when reset password: ', error);
-    })
+    auth.currentUser
+      .updatePassword(newPassword)
+      .then(() => {
+        console.log("succes reset password!");
+      })
+      .catch((error) => {
+        console.error("error when reset password: ", error);
+      });
   }
 
   function logout() {
@@ -50,14 +53,10 @@ export function AuthProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={value}>
-      {!loading && children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={value}>{!loading && children}</AuthContext.Provider>
   );
 }
-
 
 AuthProvider.propTypes = {
   children: PropTypes.any,
 };
-

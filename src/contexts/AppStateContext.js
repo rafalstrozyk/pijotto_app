@@ -1,6 +1,6 @@
-import { createContext, useReducer } from 'react';
-import PropTypes from 'prop-types';
-import { appStateVars } from '../unchangingVars';
+import { createContext, useReducer } from "react";
+import PropTypes from "prop-types";
+import { appStateVars } from "../unchangingVars";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -26,7 +26,7 @@ const reducer = (state, action) => {
 
 const initialState = {
   scroll: true,
-  message: '',
+  message: "",
   isMessage: false,
   isError: false,
 };

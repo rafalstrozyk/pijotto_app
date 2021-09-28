@@ -1,23 +1,23 @@
-import { useState, useContext } from 'react';
-import { useFormik } from 'formik';
-import PropTypes from 'prop-types';
-import * as Yup from 'yup';
-import { useFirestore } from '../../contexts/FirestoreContext';
-import { useAuth } from '../../contexts/AuthContext';
-import { AppSatateContext } from '../../contexts/AppStateContext';
-import { appStateVars } from '../../unchangingVars';
+import { useState, useContext } from "react";
+import { useFormik } from "formik";
+import PropTypes from "prop-types";
+import * as Yup from "yup";
+import { useFirestore } from "../../contexts/FirestoreContext";
+import { useAuth } from "../../contexts/AuthContext";
+import { AppSatateContext } from "../../contexts/AppStateContext";
+import { appStateVars } from "../../unchangingVars";
 
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import Button from "@material-ui/core/Button";
+import TextField from "@material-ui/core/TextField";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
-import styled from 'styled-components';
-import { Container } from '../containers/flexbox';
+import styled from "styled-components";
+import { Container } from "../containers/flexbox";
 
 const validationSchema = Yup.object({
   text: Yup.string()
-    .min(3, 'Must be 6 characters or more')
-    .max(300, '300 it is max characters'),
+    .min(3, "Must be 6 characters or more")
+    .max(300, "300 it is max characters"),
 });
 
 const StyledContainerButtons = styled(Container)`
@@ -29,11 +29,11 @@ const StyledContainerButtons = styled(Container)`
   }
 `;
 
-export default function EditPostForm({ className, post, isEditFunc }) {
+function EditPostForm({ className, post, isEditFunc }) {
   const { currentUser } = useAuth();
   const { editPost } = useFirestore();
   const [, dispatch] = useContext(AppSatateContext);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
@@ -44,13 +44,13 @@ export default function EditPostForm({ className, post, isEditFunc }) {
     onSubmit: async (values) => {
       try {
         setLoading(true);
-        setError('');
+        setError("");
         if (currentUser) {
           await editPost(post, values.text);
-          dispatch({ type: appStateVars.ALLERT, message: 'Succes edit post!' });
+          dispatch({ type: appStateVars.ALLERT, message: "Succes edit post!" });
           dispatch({ type: appStateVars.SHOW_ALLERT });
         } else {
-          setError('You are not login');
+          setError("You are not login");
           setLoading(false);
           isEditFunc(false);
           dispatch({
@@ -61,7 +61,7 @@ export default function EditPostForm({ className, post, isEditFunc }) {
           dispatch({ type: appStateVars.SHOW_ALLERT });
         }
       } catch {
-        setError('Something went wrong');
+        setError("Something went wrong");
         dispatch({ type: appStateVars.ALLERT, message: error, isError: true });
         dispatch({ type: appStateVars.SHOW_ALLERT });
       }
@@ -87,11 +87,11 @@ export default function EditPostForm({ className, post, isEditFunc }) {
         helperText={
           formik.touched.text && formik.errors.text ? formik.errors.text : null
         }
-        {...formik.getFieldProps('text')}
+        {...formik.getFieldProps("text")}
       />
       <StyledContainerButtons jusContent="center">
         <Button color="secondary" variant="contained" type="submit">
-          {loading ? <CircularProgress /> : 'Ok'}
+          {loading ? <CircularProgress /> : "Ok"}
         </Button>
         <Button
           onClick={() => isEditFunc(false)}
@@ -110,3 +110,5 @@ EditPostForm.propTypes = {
   post: PropTypes.object,
   isEditFunc: PropTypes.func,
 };
+
+export default EditPostForm;

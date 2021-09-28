@@ -1,17 +1,17 @@
-import { useState, useContext } from 'react';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useAuth } from '../../contexts/AuthContext';
-import { AppSatateContext } from '../../contexts/AppStateContext';
-import { appStateVars } from '../../unchangingVars';
-import { useHistory } from 'react-router-dom';
+import { useState, useContext } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useAuth } from "../../contexts/AuthContext";
+import { AppSatateContext } from "../../contexts/AppStateContext";
+import { appStateVars } from "../../unchangingVars";
+import { useHistory } from "react-router-dom";
 
-import  TextField from '@material-ui/core/TextField';
-import  Button from '@material-ui/core/Button';
-import CircularProgress  from '@material-ui/core/CircularProgress';
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
-import { Container } from '../containers/flexbox';
-import styled from 'styled-components';
+import { Container } from "../containers/flexbox";
+import styled from "styled-components";
 
 const StyledForm = styled.form`
   width: 100%;
@@ -23,40 +23,39 @@ const StyledContainer = styled(Container)`
 `;
 
 const validationSchema = Yup.object({
-  email: Yup.string().email('Invalid email address').required('Required'),
+  email: Yup.string().email("Invalid email address").required("Required"),
   password: Yup.string()
-    .min(6, 'Must be 6 characters or more')
-    .max(20, 'Must be 20 characters or less')
-    .required('Required'),
+    .min(6, "Must be 6 characters or more")
+    .max(20, "Must be 20 characters or less")
+    .required("Required"),
 });
 
-export default function LoginForm() {
+function LoginForm() {
   const { login } = useAuth();
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [, dispatch] = useContext(AppSatateContext);
   const history = useHistory();
 
   const formik = useFormik({
     initialValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
     validationSchema,
     onSubmit: async (values) => {
       try {
-        setError('');
+        setError("");
         setLoading(true);
         await login(values.email, values.password);
         dispatch({
           type: appStateVars.ALLERT,
-          message: 'Succes log in, hello!',
+          message: "Succes log in, hello!",
         });
         dispatch({ type: appStateVars.SHOW_ALLERT });
-        history.push('/');
+        history.push("/");
       } catch {
-        setError('Failed to log in');
-        console.log(error);
+        setError("Failed to log in");
         dispatch({ type: appStateVars.ALLERT, message: error, isError: true });
         dispatch({ type: appStateVars.SHOW_ALLERT });
       }
@@ -77,7 +76,7 @@ export default function LoginForm() {
           label="e-mail"
           type="email"
           error={formik.touched.email && formik.errors.email ? true : false}
-          {...formik.getFieldProps('email')}
+          {...formik.getFieldProps("email")}
           helperText={
             formik.touched.email && formik.errors.email
               ? formik.errors.email
@@ -93,7 +92,7 @@ export default function LoginForm() {
           error={
             formik.touched.password && formik.errors.password ? true : false
           }
-          {...formik.getFieldProps('password')}
+          {...formik.getFieldProps("password")}
           helperText={
             formik.touched.password && formik.errors.password
               ? formik.errors.password
@@ -102,9 +101,11 @@ export default function LoginForm() {
         />
 
         <Button color="secondary" variant="contained" type="submit">
-          {loading ? <CircularProgress /> : 'Log In'}
+          {loading ? <CircularProgress /> : "Log In"}
         </Button>
       </StyledContainer>
     </StyledForm>
   );
 }
+
+export default LoginForm;

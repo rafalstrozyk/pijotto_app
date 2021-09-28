@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from "moment";
 
 export function sortDateArray(array) {
   return array.sort((a, b) => {

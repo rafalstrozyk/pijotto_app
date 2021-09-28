@@ -1,18 +1,18 @@
-import SignUpForm from '../components/inputs/SignUpForm';
-import ButtonLinkRouterDom from '../components/Buttons/BtnLinkRouterDom';
-import { useWindowSize } from '../hooks/useWindowSize';
+import SignUpForm from "../components/inputs/SignUpForm";
+import ButtonLinkRouterDom from "../components/Buttons/BtnLinkRouterDom";
+import { useWindowSize } from "../hooks/useWindowSize";
 
-import { Typography } from '@material-ui/core';
+import { Typography } from "@material-ui/core";
 
-import { Container } from '../components/containers/flexbox';
-import StyledWrapperPosition from '../components/StyledComponents/StyledWrapperPosition';
+import { Container } from "../components/containers/flexbox";
+import StyledWrapperPosition from "../components/StyledComponents/StyledWrapperPosition";
 
-export default function Register() {
+function Register() {
   const size = useWindowSize();
   return (
     <StyledWrapperPosition>
       <Container
-        width={size.width > 480 ? '60%' : '95%'}
+        width={size.width > 480 ? "60%" : "95%"}
         direction="column"
         jusContent="center"
         aliItems="center"
@@ -25,7 +25,7 @@ export default function Register() {
 
       <ButtonLinkRouterDom
         color="secondary"
-        style={{ marginTop: '20px' }}
+        style={{ marginTop: "20px" }}
         link="/login"
       >
         log in
@@ -33,3 +33,5 @@ export default function Register() {
     </StyledWrapperPosition>
   );
 }
+
+export default Register;

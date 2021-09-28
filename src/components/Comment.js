@@ -1,21 +1,20 @@
-import { useState } from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import PropTypes from 'prop-types';
-import { useFirestore } from '../contexts/FirestoreContext';
-import EditCommentForm from './inputs/EditCommentForm';
+import { useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
+import PropTypes from "prop-types";
+import { useFirestore } from "../contexts/FirestoreContext";
+import EditCommentForm from "./inputs/EditCommentForm";
 
-import ListItem from '@material-ui/core/ListItem';
-import Divider from '@material-ui/core/Divider';
-import ListItemText from '@material-ui/core/ListItemText';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
+import ListItem from "@material-ui/core/ListItem";
+import Divider from "@material-ui/core/Divider";
+import ListItemText from "@material-ui/core/ListItemText";
+import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
 
-import { Container } from './containers/flexbox';
+import { Container } from "./containers/flexbox";
 
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-
-export default function Comment({ comment, postId }) {
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+function Comment({ comment, postId }) {
   const { currentUser } = useAuth();
   const { deleteCommentPost } = useFirestore();
   const [isOpenEdit, setIsOpenEdit] = useState(false);
@@ -65,7 +64,7 @@ export default function Comment({ comment, postId }) {
                   <Typography variant="subtitle1" gutterBottom>
                     {comment.nick}
                   </Typography>
-                  <Typography style={{ marginLeft: '10px' }} variant="caption">
+                  <Typography style={{ marginLeft: "10px" }} variant="caption">
                     {comment.created}
                   </Typography>
                 </Container>
@@ -101,3 +100,5 @@ Comment.propTypes = {
   comment: PropTypes.object,
   postId: PropTypes.string,
 };
+
+export default Comment;

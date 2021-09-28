@@ -1,19 +1,19 @@
-import { useState, useContext } from 'react';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
-import { useFirestore } from '../../contexts/FirestoreContext';
-import { AppSatateContext } from '../../contexts/AppStateContext';
-import { appStateVars } from '../../unchangingVars';
-import PropTypes from 'prop-types';
+import { useState, useContext } from "react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
+import { useFirestore } from "../../contexts/FirestoreContext";
+import { AppSatateContext } from "../../contexts/AppStateContext";
+import { appStateVars } from "../../unchangingVars";
+import PropTypes from "prop-types";
 
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import CancelIcon from '@material-ui/icons/Cancel';
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import CancelIcon from "@material-ui/icons/Cancel";
 
-import SendIcon from '@material-ui/icons/Send';
+import SendIcon from "@material-ui/icons/Send";
 
-import { Container } from '../containers/flexbox';
-import styled from 'styled-components';
+import { Container } from "../containers/flexbox";
+import styled from "styled-components";
 
 const StyledContainer = styled(Container)`
   > *:not(:first-child) {
@@ -23,11 +23,11 @@ const StyledContainer = styled(Container)`
 
 const validationSchema = Yup.object({
   content: Yup.string()
-    .min(3, 'Must be 6 characters or more')
-    .max(200, '200 it is max characters'),
+    .min(3, "Must be 6 characters or more")
+    .max(200, "200 it is max characters"),
 });
 
-export default function EditCommentForm({ comment, postId, setIsOpen }) {
+function EditCommentForm({ comment, postId, setIsOpen }) {
   const { editCommentsPost } = useFirestore();
   const [, dispatch] = useContext(AppSatateContext);
   const [error, setError] = useState(null);
@@ -49,11 +49,11 @@ export default function EditCommentForm({ comment, postId, setIsOpen }) {
         await editCommentsPost({ comment, postId, content: values.content });
         dispatch({
           type: appStateVars.ALLERT,
-          message: 'succes edit comment!',
+          message: "succes edit comment!",
         });
         dispatch({ type: appStateVars.SHOW_ALLERT });
       } catch {
-        setError('Something went wrong');
+        setError("Something went wrong");
         dispatch({ type: appStateVars.ALLERT, message: error });
         dispatch({ type: appStateVars.SHOW_ALLERT });
       }
@@ -62,11 +62,11 @@ export default function EditCommentForm({ comment, postId, setIsOpen }) {
       setTimeout(() => {
         dispatch({ type: appStateVars.DONT_SHOW_ALLERT });
       }, 5000);
-      values.content = '';
+      values.content = "";
     },
   });
   return (
-    <form style={{ width: '100%' }} onSubmit={formik.handleSubmit}>
+    <form style={{ width: "100%" }} onSubmit={formik.handleSubmit}>
       <StyledContainer jusContent="space-between" aliItems="center">
         {error && <p>Error!!</p>}
         {loading ? (
@@ -80,15 +80,13 @@ export default function EditCommentForm({ comment, postId, setIsOpen }) {
               color="primary"
               rows={1}
               variant="outlined"
-              error={
-                formik.touched.content && formik.errors.content ? true : false
-              }
+              error={formik.touched.content && formik.errors.content ? true : false}
               helperText={
                 formik.touched.content && formik.errors.content
                   ? formik.errors.content
                   : null
               }
-              {...formik.getFieldProps('content')}
+              {...formik.getFieldProps("content")}
             />
             <Button
               color="primary"
@@ -120,3 +118,5 @@ EditCommentForm.propTypes = {
   postId: PropTypes.string,
   setIsOpen: PropTypes.func,
 };
+
+export default EditCommentForm;

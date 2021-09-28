@@ -1,8 +1,8 @@
-import { useRef } from 'react';
-import PropTypes from 'prop-types';
-import { useOnClickOutside } from '../hooks/useOnClickOutside';
+import { useRef } from "react";
+import PropTypes from "prop-types";
+import { useOnClickOutside } from "../hooks/useOnClickOutside";
 
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const StyledModal = styled.div`
   position: fixed;
@@ -23,7 +23,7 @@ const StyledModal = styled.div`
   }
 `;
 
-export default function Modal({ children, open, setOpen }) {
+function Modal({ children, open, setOpen }) {
   const ref = useRef();
   useOnClickOutside(ref, () => setOpen(false));
 
@@ -43,3 +43,5 @@ Modal.propTypes = {
   open: PropTypes.bool,
   setOpen: PropTypes.func,
 };
+
+export default Modal;

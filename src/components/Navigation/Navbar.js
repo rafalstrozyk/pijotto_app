@@ -1,15 +1,15 @@
-import { useAuth } from '../../contexts/AuthContext';
-import { useFirestore } from '../../contexts/FirestoreContext';
-import PropTypes from 'prop-types';
+import { useAuth } from "../../contexts/AuthContext";
+import { useFirestore } from "../../contexts/FirestoreContext";
+import PropTypes from "prop-types";
 
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 
-import Menu from './Menu';
+import Menu from "./Menu";
 
-import { Container } from '../containers/flexbox';
-import styled from 'styled-components';
+import { Container } from "../containers/flexbox";
+import styled from "styled-components";
 
 const StyledContainerMenuItemsFlex = styled(Container)`
   > :first-child {
@@ -22,7 +22,7 @@ const StyledContainerMenuItemsFlex = styled(Container)`
   }
 `;
 
-export default function Navbar({ ...rest }) {
+function Navbar({ ...rest }) {
   const { currentUser } = useAuth();
   const { userPersonalData } = useFirestore();
   return (
@@ -34,10 +34,10 @@ export default function Navbar({ ...rest }) {
             <StyledContainerMenuItemsFlex aliItems="center">
               {currentUser ? (
                 <Typography variant="body1" color="secondary">
-                  Hello{' '}
+                  Hello{" "}
                   {currentUser && userPersonalData
                     ? userPersonalData.nick
-                    : '...loading'}
+                    : "...loading"}
                   !
                 </Typography>
               ) : null}
@@ -53,3 +53,5 @@ export default function Navbar({ ...rest }) {
 Navbar.propTypes = {
   rest: PropTypes.any,
 };
+
+export default Navbar;

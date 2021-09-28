@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-import styled from 'styled-components';
-import { Container } from '../containers/flexbox';
+import styled from "styled-components";
+import { Container } from "../containers/flexbox";
 
 const StyledPosition = styled.div`
   position: absolute;
@@ -20,8 +20,7 @@ const StyledBox = styled.div`
     max-width: 500px;
   }
 `;
-
-export default function StyledWrapperPosition({ children }) {
+function StyledWrapperPosition({ children }) {
   return (
     <StyledPosition>
       <StyledBox>
@@ -36,3 +35,5 @@ export default function StyledWrapperPosition({ children }) {
 StyledWrapperPosition.propTypes = {
   children: PropTypes.any,
 };
+
+export default StyledWrapperPosition;

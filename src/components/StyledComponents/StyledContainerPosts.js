@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import {Container} from '../containers/flexbox';
+import styled from "styled-components";
+import { Container } from "../containers/flexbox";
 
 const StyledContainerPosts = styled(Container)`
   > * {
@@ -12,5 +12,4 @@ const StyledContainerPosts = styled(Container)`
   }
 `;
 
-
-export default  StyledContainerPosts;
+export default StyledContainerPosts;

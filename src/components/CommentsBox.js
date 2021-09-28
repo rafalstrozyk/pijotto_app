@@ -1,25 +1,25 @@
-import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { useFirestore } from '../contexts/FirestoreContext';
-import NewCommentForm from './inputs/NewCommentForm';
-import Comment from './Comment';
+import { useEffect, useState } from "react";
+import PropTypes from "prop-types";
+import { useFirestore } from "../contexts/FirestoreContext";
+import NewCommentForm from "./inputs/NewCommentForm";
+import Comment from "./Comment";
 
-import styled from 'styled-components';
-import { Container } from './containers/flexbox';
+import styled from "styled-components";
+import { Container } from "./containers/flexbox";
 
-import Typography from '@material-ui/core/Typography';
-import List from '@material-ui/core/List';
-import { makeStyles } from '@material-ui/core/styles';
+import Typography from "@material-ui/core/Typography";
+import List from "@material-ui/core/List";
+import { makeStyles } from "@material-ui/core/styles";
 
-import IconButton from '@material-ui/core/IconButton';
-import CancelIcon from '@material-ui/icons/Cancel';
+import IconButton from "@material-ui/core/IconButton";
+import CancelIcon from "@material-ui/icons/Cancel";
 
 const useStyles = makeStyles(() => ({
   root: {
-    width: '100%',
-    position: 'relative',
-    overflow: 'auto',
-    maxHeight: '60vh',
+    width: "100%",
+    position: "relative",
+    overflow: "auto",
+    maxHeight: "60vh",
   },
 }));
 
@@ -50,7 +50,7 @@ const StyledCommentsBox = styled.div`
   }
 `;
 
-export default function CommentsBox({ post, setOpen }) {
+function CommentsBox({ post, setOpen }) {
   const classes = useStyles();
   const { getCommentsPost } = useFirestore();
   const [postComments, setPostComments] = useState([]);
@@ -74,7 +74,7 @@ export default function CommentsBox({ post, setOpen }) {
         </IconButton>
       </Container>
       <Typography
-        style={{ wordWrap: 'break-word' }}
+        style={{ wordWrap: "break-word" }}
         color="textPrimary"
         component="p"
         variant="body1"
@@ -96,3 +96,5 @@ CommentsBox.propTypes = {
   post: PropTypes.object,
   setOpen: PropTypes.func,
 };
+
+export default CommentsBox;

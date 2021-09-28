@@ -1,29 +1,29 @@
-import { useState, useEffect, useContext } from 'react';
-import { useFirestore } from '../contexts/FirestoreContext';
-import { useAuth } from '../contexts/AuthContext';
-import PropTypes from 'prop-types';
-import { booleanArrayFindObject } from '../functions/booleanArrayFind';
-import CommentsBox from './CommentsBox';
-import EditPostForm from './inputs/EditPostForm';
-import Modal from './Modal';
-import { AppSatateContext } from '../contexts/AppStateContext';
-import { appStateVars } from '../unchangingVars';
+import { useState, useEffect, useContext } from "react";
+import { useFirestore } from "../contexts/FirestoreContext";
+import { useAuth } from "../contexts/AuthContext";
+import PropTypes from "prop-types";
+import { booleanArrayFindObject } from "../functions/booleanArrayFind";
+import CommentsBox from "./CommentsBox";
+import EditPostForm from "./inputs/EditPostForm";
+import Modal from "./Modal";
+import { AppSatateContext } from "../contexts/AppStateContext";
+import { appStateVars } from "../unchangingVars";
 
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import CardActions from '@material-ui/core/CardActions';
-import CardHeader from '@material-ui/core/CardHeader';
-import IconButton from '@material-ui/core/IconButton';
-import { makeStyles } from '@material-ui/styles';
+import Card from "@material-ui/core/Card";
+import CardContent from "@material-ui/core/CardContent";
+import Typography from "@material-ui/core/Typography";
+import CardActions from "@material-ui/core/CardActions";
+import CardHeader from "@material-ui/core/CardHeader";
+import IconButton from "@material-ui/core/IconButton";
+import { makeStyles } from "@material-ui/styles";
 
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
-import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
+import FavoriteIcon from "@material-ui/icons/Favorite";
+import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
+import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
 
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,7 +38,7 @@ const StyledCard = styled(Card)`
   }
 `;
 
-export default function PostCard({ post, ...rest }) {
+function PostCard({ post, ...rest }) {
   const { likePost, deletePost } = useFirestore();
   const { currentUser } = useAuth();
   const [, dispatch] = useContext(AppSatateContext);
@@ -67,7 +67,7 @@ export default function PostCard({ post, ...rest }) {
           <EditPostForm post={post} isEditFunc={setEdited} />
         ) : (
           <Typography
-            style={{ wordWrap: 'break-word' }}
+            style={{ wordWrap: "break-word" }}
             color="textPrimary"
             component="p"
             variant="body1"
@@ -80,14 +80,14 @@ export default function PostCard({ post, ...rest }) {
           <IconButton
             color={
               post.likers &&
-              booleanArrayFindObject(post.likers, currentUser.uid, 'userId')
-                ? 'inherit'
-                : 'primary'
+              booleanArrayFindObject(post.likers, currentUser.uid, "userId")
+                ? "inherit"
+                : "primary"
             }
             onClick={handleLike}
           >
             {post.likers &&
-            booleanArrayFindObject(post.likers, currentUser.uid, 'userId') ? (
+            booleanArrayFindObject(post.likers, currentUser.uid, "userId") ? (
               <FavoriteIcon />
             ) : (
               <FavoriteBorderIcon />
@@ -96,9 +96,9 @@ export default function PostCard({ post, ...rest }) {
           <Typography
             color={
               post.likers &&
-              booleanArrayFindObject(post.likers, currentUser.uid, 'userId')
-                ? 'inherit'
-                : 'primary'
+              booleanArrayFindObject(post.likers, currentUser.uid, "userId")
+                ? "inherit"
+                : "primary"
             }
             variant="button"
           >
@@ -132,3 +132,5 @@ PostCard.propTypes = {
   post: PropTypes.object,
   rest: PropTypes.any,
 };
+
+export default PostCard;

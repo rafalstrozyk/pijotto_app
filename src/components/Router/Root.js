@@ -1,15 +1,15 @@
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route } from "react-router-dom";
 
-import Home from '../../pages/Home';
-import User from '../../pages/User';
-import Login from '../../pages/Login';
-import Register from '../../pages/Register';
+import Home from "../../pages/Home";
+import User from "../../pages/User";
+import Login from "../../pages/Login";
+import Register from "../../pages/Register";
 
-import PrivateRoute from './PrivateRoute';
+import PrivateRoute from "./PrivateRoute";
 
-import { routsPathVars } from '../../unchangingVars';
+import { routsPathVars } from "../../unchangingVars";
 
-export default function Root() {
+function Root() {
   return (
     <Switch>
       <PrivateRoute exact path={routsPathVars.home} component={Home} />
@@ -23,3 +23,5 @@ export default function Root() {
     </Switch>
   );
 }
+
+export default Root;
