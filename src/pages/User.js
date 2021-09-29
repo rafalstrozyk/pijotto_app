@@ -35,18 +35,28 @@ function User() {
       {currentUser && userPersonalData && (
         <>
           <div>
-            <Typography variant="body1">nick: {userPersonalData.nick}</Typography>
+            <Typography variant="body1">
+              nick: {userPersonalData.nick}
+            </Typography>
             <Typography variant="body1">email: {currentUser.email}</Typography>
             <Typography variant="body1">uid: {currentUser.uid}</Typography>
           </div>
-          <Button variant="contained" onClick={handleOpenForm} color="secondary">
+          <Button
+            variant="contained"
+            onClick={handleOpenForm}
+            color="secondary"
+          >
             reset password
           </Button>
           {isOpenResetPasswordForm && (
             <ResetPasswordForm handleIsOpenFunc={setIsOpenResetPasswordForm} />
           )}
 
-          <Button variant="contained" onClick={handleGetUserPosts} color="secondary">
+          <Button
+            variant="contained"
+            onClick={handleGetUserPosts}
+            color="secondary"
+          >
             All my posts
           </Button>
           <StyledContainerPosts

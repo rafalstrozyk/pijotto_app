@@ -91,7 +91,9 @@ function SignUpForm() {
           error={formik.touched.email && formik.errors.email ? true : false}
           {...formik.getFieldProps("email")}
           helperText={
-            formik.touched.email && formik.errors.email ? formik.errors.email : null
+            formik.touched.email && formik.errors.email
+              ? formik.errors.email
+              : null
           }
         />
         <TextField
@@ -103,7 +105,9 @@ function SignUpForm() {
           error={formik.touched.nick && formik.errors.nick ? true : false}
           {...formik.getFieldProps("nick")}
           helperText={
-            formik.touched.nick && formik.errors.nick ? formik.errors.nick : null
+            formik.touched.nick && formik.errors.nick
+              ? formik.errors.nick
+              : null
           }
         />
         <TextField
@@ -112,7 +116,9 @@ function SignUpForm() {
           id="password"
           label="password"
           type="password"
-          error={formik.touched.password && formik.errors.password ? true : false}
+          error={
+            formik.touched.password && formik.errors.password ? true : false
+          }
           {...formik.getFieldProps("password")}
           helperText={
             formik.touched.password && formik.errors.password
@@ -127,13 +133,15 @@ function SignUpForm() {
           label="repeat password"
           type="password"
           error={
-            formik.touched.passwordConfirmation && formik.errors.passwordConfirmation
+            formik.touched.passwordConfirmation &&
+            formik.errors.passwordConfirmation
               ? true
               : false
           }
           {...formik.getFieldProps("passwordConfirmation")}
           helperText={
-            formik.touched.passwordConfirmation && formik.errors.passwordConfirmation
+            formik.touched.passwordConfirmation &&
+            formik.errors.passwordConfirmation
               ? formik.errors.passwordConfirmation
               : null
           }

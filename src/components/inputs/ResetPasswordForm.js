@@ -74,7 +74,9 @@ function LoginForm({ handleIsOpenFunc }) {
           id="password"
           label="password"
           type="password"
-          error={formik.touched.password && formik.errors.password ? true : false}
+          error={
+            formik.touched.password && formik.errors.password ? true : false
+          }
           {...formik.getFieldProps("password")}
           helperText={
             formik.touched.password && formik.errors.password

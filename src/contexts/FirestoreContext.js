@@ -13,6 +13,9 @@ export function useFirestore() {
   return useContext(FirestoreContext);
 }
 
+const increment = firebase.firestore.FieldValue.increment(1);
+const decrement = firebase.firestore.FieldValue.increment(-1);
+
 const postsRef = firestore.collection(firebaseVars.posts);
 const usersRef = firestore.collection(firebaseVars.users);
 
@@ -76,7 +79,7 @@ export function FirestoreProvider({ children }) {
         nick: userPersonalData.nick,
         likes: 0,
         likers: [],
-        coments: {},
+        coments: 0,
       });
     }
   }
@@ -171,15 +174,23 @@ export function FirestoreProvider({ children }) {
   function sendCommentForPost(data) {
     postsRef
       .doc(data.postId)
-      .collection(firebaseVars.comments)
-      .add({
-        created: new Date(),
-        content: data.content,
-        userId: currentUser.uid,
-        nick: userPersonalData.nick,
+      .update({
+        coments: increment,
       })
-      .then(() => console.log("succes add coment!!"))
-      .catch((error) => console.error("Error add comment: ", error));
+      .then(() => {
+        postsRef
+          .doc(data.postId)
+          .collection(firebaseVars.comments)
+          .add({
+            created: new Date(),
+            content: data.content,
+            userId: currentUser.uid,
+            nick: userPersonalData.nick,
+          })
+          .then(() => console.log("succes add coment!!"))
+          .catch((error) => console.error("Error add comment: ", error));
+      })
+      .catch((error) => console.error("Error increment coments ", error));
   }
 
   function getCommentsPost(postId, setCommentsFunc) {
@@ -215,11 +226,23 @@ export function FirestoreProvider({ children }) {
     if (currentUser.uid === comment.userId) {
       postsRef
         .doc(postId)
-        .collection(firebaseVars.comments)
-        .doc(comment.id)
-        .delete()
-        .then(() => console.log("success delete comment"))
-        .catch((error) => console.error("error on delete comment: ", error));
+        .update({
+          coments: decrement,
+        })
+        .then(() => {
+          postsRef
+            .doc(postId)
+            .collection(firebaseVars.comments)
+            .doc(comment.id)
+            .delete()
+            .then(() => console.log("success delete comment"))
+            .catch((error) =>
+              console.error("error on delete comment: ", error)
+            );
+        })
+        .catch((error) => {
+          console.error("Error on decrement coment:" + error);
+        });
     }
   }
 

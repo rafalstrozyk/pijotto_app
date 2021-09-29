@@ -16,7 +16,9 @@ function Providers({ children }) {
       <AuthProvider>
         <FirestoreProvider>
           <ThemeProvider theme={theme}>
-            <MuiThemeProvider theme={responsiveTheme}>{children}</MuiThemeProvider>
+            <MuiThemeProvider theme={responsiveTheme}>
+              {children}
+            </MuiThemeProvider>
           </ThemeProvider>
         </FirestoreProvider>
       </AuthProvider>

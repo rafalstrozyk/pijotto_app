@@ -32,7 +32,29 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const StyledCard = styled(Card)`
+  hr {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(
+      to right,
+      rgba(55, 150, 131, 0),
+      rgba(55, 150, 131, 0.75),
+      rgba(55, 150, 131, 0)
+    );
+  }
   width: 100%;
+  .card-content {
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-top: 0px;
+    .post {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    > *:last-child {
+      margin-top: 10px;
+    }
+  }
   @media only screen and (min-width: 480px) {
     max-width: calc(1200px / 4);
   }
@@ -62,11 +84,13 @@ function PostCard({ post, ...rest }) {
   return (
     <StyledCard classes={classes} {...rest}>
       <CardHeader title={post.nick} subheader={post.created}></CardHeader>
-      <CardContent>
+      <hr />
+      <CardContent className="card-content">
         {edited ? (
-          <EditPostForm post={post} isEditFunc={setEdited} />
+          <EditPostForm className="post" post={post} isEditFunc={setEdited} />
         ) : (
           <Typography
+            className="post"
             style={{ wordWrap: "break-word" }}
             color="textPrimary"
             component="p"
@@ -75,7 +99,7 @@ function PostCard({ post, ...rest }) {
             {post.text}
           </Typography>
         )}
-
+        <hr />
         <CardActions>
           <IconButton
             color={
@@ -107,6 +131,9 @@ function PostCard({ post, ...rest }) {
           <IconButton color="primary" onClick={handleOpenCommentBox}>
             <ChatBubbleIcon />
           </IconButton>
+          <Typography color="primary" variant="button">
+            {post.coments}
+          </Typography>
 
           <Modal open={openCommentBox} setOpen={setOpenCommentBox}>
             <CommentsBox post={post} setOpen={setOpenCommentBox} />

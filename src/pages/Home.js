@@ -30,7 +30,11 @@ function Home() {
         <Container jusContent="center">
           <StyledNewPostForm />
         </Container>
-        <StyledContainerPosts wrap="true" aliItems="flex-start" jusContent="center">
+        <StyledContainerPosts
+          wrap="true"
+          aliItems="flex-start"
+          jusContent="center"
+        >
           {allPosts.length > 0 &&
             allPosts.map((item) => <PostCard key={item.id} post={item} />)}
         </StyledContainerPosts>
