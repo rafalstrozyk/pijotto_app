@@ -80,7 +80,7 @@ function NewCommentForm({ postId }) {
               color="primary"
               type="submit"
               variant="contained"
-              startIcon={<SendIcon />}
+              endIcon={<SendIcon />}
               style={{ marginLeft: "10px" }}
             >
               Send

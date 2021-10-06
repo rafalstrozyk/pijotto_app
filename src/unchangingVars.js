@@ -3,7 +3,7 @@ export const firebaseVars = {
   users: "users",
   comments: "comments",
   userId: "userId",
-  dateFormat: "dddd, MMMM Do YYYY, h:mm a",
+  dateFormat: "dddd, MM YY, h:mm a",
 };
 
 export const routsPathVars = {

@@ -74,7 +74,7 @@ function NewPostForm({ className }) {
         fullWidth
         id="text"
         label="Post content"
-        color="secondary"
+        color="primary"
         multiline
         rows={3}
         variant="outlined"

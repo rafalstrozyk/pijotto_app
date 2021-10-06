@@ -13,13 +13,6 @@ import CancelIcon from "@material-ui/icons/Cancel";
 import SendIcon from "@material-ui/icons/Send";
 
 import { Container } from "../containers/flexbox";
-import styled from "styled-components";
-
-const StyledContainer = styled(Container)`
-  > *:not(:first-child) {
-    margin-left: 10px;
-  }
-`;
 
 const validationSchema = Yup.object({
   content: Yup.string()
@@ -67,7 +60,11 @@ function EditCommentForm({ comment, postId, setIsOpen }) {
   });
   return (
     <form style={{ width: "100%" }} onSubmit={formik.handleSubmit}>
-      <StyledContainer jusContent="space-between" aliItems="center">
+      <Container
+        jusContent="space-between"
+        aliItems="center"
+        direction="column"
+      >
         {error && <p>Error!!</p>}
         {loading ? (
           <p>Editing comment...</p>
@@ -90,27 +87,34 @@ function EditCommentForm({ comment, postId, setIsOpen }) {
               }
               {...formik.getFieldProps("content")}
             />
-            <Button
-              color="primary"
-              type="submit"
-              size="small"
-              variant="contained"
-              startIcon={<SendIcon />}
+            <Container
+              style={{ marginTop: "10px" }}
+              aliItems="center"
+              jusContent="space-around"
+              width="200px"
             >
-              Send
-            </Button>
-            <Button
-              color="primary"
-              size="small"
-              variant="contained"
-              onClick={handleIsOpen}
-              startIcon={<CancelIcon />}
-            >
-              Candel
-            </Button>
+              <Button
+                color="primary"
+                type="submit"
+                size="small"
+                variant="contained"
+                endIcon={<SendIcon />}
+              >
+                Send
+              </Button>
+              <Button
+                color="primary"
+                size="small"
+                variant="contained"
+                onClick={handleIsOpen}
+                startIcon={<CancelIcon />}
+              >
+                Cancel
+              </Button>
+            </Container>
           </>
         )}
-      </StyledContainer>
+      </Container>
     </form>
   );
 }

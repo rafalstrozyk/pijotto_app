@@ -32,6 +32,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const StyledCard = styled(Card)`
+  width: 100%;
+  border-radius: 0 !important;
   hr {
     border: 0;
     height: 1px;
@@ -42,21 +44,33 @@ const StyledCard = styled(Card)`
       rgba(55, 150, 131, 0)
     );
   }
-  width: 100%;
+
   .card-content {
-    padding-top: 0;
-    padding-bottom: 0;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
     margin-top: 0px;
+
     .post {
-      margin-top: 20px;
-      margin-bottom: 20px;
+      margin-top: 10px;
+      margin-bottom: 10px;
     }
     > *:last-child {
-      margin-top: 10px;
+      margin-top: 5px;
     }
   }
   @media only screen and (min-width: 480px) {
     max-width: calc(1200px / 4);
+    border-radius: 4px !important;
+    .card-content {
+      padding-bottom: 10px !important;
+      .post {
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+      > *:last-child {
+        margin-top: 10px;
+      }
+    }
   }
 `;
 

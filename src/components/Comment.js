@@ -3,6 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import PropTypes from "prop-types";
 import { useFirestore } from "../contexts/FirestoreContext";
 import EditCommentForm from "./inputs/EditCommentForm";
+import styled from "styled-components";
 
 import ListItem from "@material-ui/core/ListItem";
 import Divider from "@material-ui/core/Divider";
@@ -14,6 +15,17 @@ import { Container } from "./containers/flexbox";
 
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
+
+const StyledContainerForEditButtons = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: end;
+
+  align-items: center;
+  @media only screen and (max-width: 480px) {
+    width: 40px;
+  }
+`;
 function Comment({ comment, postId }) {
   const { currentUser } = useAuth();
   const { deleteCommentPost } = useFirestore();
@@ -81,14 +93,14 @@ function Comment({ comment, postId }) {
           comment &&
           comment.userId === currentUser.uid &&
           !isOpenEdit && (
-            <div>
+            <StyledContainerForEditButtons>
               <IconButton onClick={handleOpenEdit} color="primary">
                 <EditIcon fontSize="small" />
               </IconButton>
               <IconButton onClick={handleDelete} color="primary">
                 <DeleteIcon fontSize="small" />
               </IconButton>
-            </div>
+            </StyledContainerForEditButtons>
           )}
       </ListItem>
       <Divider variant="inset" component="li" />

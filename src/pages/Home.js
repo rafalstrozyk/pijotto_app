@@ -9,6 +9,9 @@ import styled from "styled-components";
 
 const StyledNewPostForm = styled(NewPostForm)`
   width: 95%;
+  background-color: ${({ theme }) => theme.palette.secondary.main};
+  padding: 10px;
+  border-radius: 10px;
   @media only screen and (min-width: 480px) {
     width: 100%;
     max-width: 500px;
