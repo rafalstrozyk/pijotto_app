@@ -1,6 +1,6 @@
-import PropTypes from "prop-types";
-import { useHistory } from "react-router-dom";
-import Button from "@material-ui/core/Button";
+import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
 function ButtonLinkRouterDom({ link, children, ...rest }) {
   const history = useHistory();

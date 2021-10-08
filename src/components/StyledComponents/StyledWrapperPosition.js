@@ -1,7 +1,7 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import styled from "styled-components";
-import { Container } from "../containers/flexbox";
+import styled from 'styled-components';
+import { Container } from '../containers/flexbox';
 
 const StyledPosition = styled.div`
   position: absolute;
@@ -11,7 +11,7 @@ const StyledPosition = styled.div`
 `;
 
 const StyledBox = styled.div`
-  background-color: ${({ theme }) => theme.palette.primary.main};
+  background-color: ${({ theme }) => theme.palette.secondary.main};
   width: 100vw;
 
   @media only screen and (min-width: 480px) {

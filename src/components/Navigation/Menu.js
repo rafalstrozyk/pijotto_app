@@ -1,16 +1,16 @@
-import { useState, useRef } from "react";
-import { CSSTransition } from "react-transition-group";
-import { useOnClickOutside } from "../../hooks/useOnClickOutside";
-import { useAuth } from "../../contexts/AuthContext";
+import { useState, useRef } from 'react';
+import { CSSTransition } from 'react-transition-group';
+import { useOnClickOutside } from '../../hooks/useOnClickOutside';
+import { useAuth } from '../../contexts/AuthContext';
 
-import BtnRrdLink from "../Buttons/BtnRrdLink";
-import styled from "styled-components";
+import BtnRrdLink from '../Buttons/BtnRrdLink';
+import styled from 'styled-components';
 
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import PersonIcon from "@material-ui/icons/Person";
-import HomeIcon from "@material-ui/icons/Home";
-import IconButton from "@material-ui/core/Button";
-import MenuIcon from "@material-ui/icons/Menu";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import PersonIcon from '@material-ui/icons/Person';
+import HomeIcon from '@material-ui/icons/Home';
+import IconButton from '@material-ui/core/Button';
+import MenuIcon from '@material-ui/icons/Menu';
 
 const StyledMenu = styled.div`
   position: relative;
@@ -70,7 +70,7 @@ function Menu() {
                   functionOnClick={() => setIsOpen(false)}
                   link="/"
                   size="small"
-                  style={{ width: "100%" }}
+                  style={{ width: '100%' }}
                   color="primary"
                   startIcon={<HomeIcon />}
                 >
@@ -82,7 +82,7 @@ function Menu() {
                   functionOnClick={() => setIsOpen(false)}
                   link="/user"
                   size="small"
-                  style={{ width: "100%" }}
+                  style={{ width: '100%' }}
                   color="primary"
                   startIcon={<PersonIcon />}
                 >
@@ -96,7 +96,7 @@ function Menu() {
                     logout();
                   }}
                   size="small"
-                  style={{ width: "100%" }}
+                  style={{ width: '100%' }}
                   color="primary"
                   startIcon={<ExitToAppIcon />}
                 >
@@ -111,7 +111,7 @@ function Menu() {
                   functionOnClick={() => setIsOpen(false)}
                   link="/login"
                   size="small"
-                  style={{ width: "100%" }}
+                  style={{ width: '100%' }}
                   color="primary"
                 >
                   Login
@@ -122,7 +122,7 @@ function Menu() {
                   functionOnClick={() => setIsOpen(false)}
                   link="/register"
                   size="small"
-                  style={{ width: "100%" }}
+                  style={{ width: '100%' }}
                   color="primary"
                 >
                   Register

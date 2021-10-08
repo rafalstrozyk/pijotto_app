@@ -1,25 +1,26 @@
-import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
-import { useFirestore } from "../contexts/FirestoreContext";
-import NewCommentForm from "./inputs/NewCommentForm";
-import Comment from "./Comment";
+import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { useFirestore } from '../contexts/FirestoreContext';
+import NewCommentForm from './inputs/NewCommentForm';
+import Comment from './Comment';
 
-import styled from "styled-components";
-import { Container } from "./containers/flexbox";
+import styled from 'styled-components';
+import { Container } from './containers/flexbox';
 
-import Typography from "@material-ui/core/Typography";
-import List from "@material-ui/core/List";
-import { makeStyles } from "@material-ui/core/styles";
+import Typography from '@material-ui/core/Typography';
+import List from '@material-ui/core/List';
+import { makeStyles } from '@material-ui/core/styles';
 
-import IconButton from "@material-ui/core/IconButton";
-import CancelIcon from "@material-ui/icons/Cancel";
+import IconButton from '@material-ui/core/IconButton';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 const useStyles = makeStyles(() => ({
   root: {
-    width: "100%",
-    position: "relative",
-    overflow: "auto",
-    maxHeight: "60vh",
+    width: '100%',
+    position: 'relative',
+    overflow: 'auto',
+    maxHeight: '60vh',
+    marginTop: '15px',
   },
 }));
 
@@ -38,6 +39,12 @@ const StyledCommentsBox = styled.div`
     width: 90%;
     :not(:last-child) {
       margin-top: 10px;
+    }
+  }
+
+  .list-items-marg {
+    & > *:not(:last-child) {
+      margin-bottom: 10px;
     }
   }
 
@@ -74,7 +81,7 @@ function CommentsBox({ post, setOpen }) {
         </IconButton>
       </Container>
       <Typography
-        style={{ wordWrap: "break-word" }}
+        style={{ wordWrap: 'break-word' }}
         color="textPrimary"
         component="p"
         variant="body1"
@@ -82,7 +89,7 @@ function CommentsBox({ post, setOpen }) {
         {post.text}
       </Typography>
       <NewCommentForm postId={post.id} />
-      <List className={classes.root}>
+      <List className={`${classes.root} list-items-marg`}>
         {postComments.length > 0 &&
           postComments.map((comment) => (
             <Comment key={comment.id} comment={comment} postId={post.id} />

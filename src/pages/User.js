@@ -1,15 +1,15 @@
-import { useState } from "react";
-import { useFirestore } from "../contexts/FirestoreContext";
-import { useAuth } from "../contexts/AuthContext";
-import ResetPasswordForm from "../components/inputs/ResetPasswordForm";
-import PostCard from "../components/PostCard";
-import StyledContainerPosts from "../components/StyledComponents/StyledContainerPosts";
+import { useState } from 'react';
+import { useFirestore } from '../contexts/FirestoreContext';
+import { useAuth } from '../contexts/AuthContext';
+import ResetPasswordForm from '../components/inputs/ResetPasswordForm';
+import PostCard from '../components/PostCard';
+import StyledContainerPosts from '../components/StyledComponents/StyledContainerPosts';
 
-import { Container } from "../components/containers/flexbox";
-import styled from "styled-components";
+import { Container } from '../components/containers/flexbox';
+import styled from 'styled-components';
 
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 
 const StyledContainer = styled(Container)`
   > *:not(:first-child) {
@@ -19,15 +19,22 @@ const StyledContainer = styled(Container)`
 
 function User() {
   const { currentUser } = useAuth();
-  const { userPersonalData, userPosts, getUserPosts } = useFirestore();
+  const { userPersonalData, userPosts } = useFirestore();
   const [isOpenResetPasswordForm, setIsOpenResetPasswordForm] = useState(false);
+  const [isOpenUserPostsList, setIsOpenUserPostsList] = useState(false);
+
+  // useEffect(() => {
+  //   if (isOpenUserPostsList && userPosts) {
+  //     getUserPosts();
+  //   }
+  // }, [isOpenUserPostsList, getUserPosts, userPosts]);
 
   function handleOpenForm() {
     setIsOpenResetPasswordForm(true);
   }
 
   function handleGetUserPosts() {
-    getUserPosts();
+    setIsOpenUserPostsList((state) => !state);
   }
 
   return (
@@ -62,9 +69,10 @@ function User() {
           <StyledContainerPosts
             wrap="true"
             aliItems="flex-start"
-            jusContent="center"
+            jusContent="flex-start"
           >
-            {userPosts.length > 0 &&
+            {isOpenUserPostsList &&
+              userPosts.length > 0 &&
               userPosts.map((post) => <PostCard key={post.id} post={post} />)}
           </StyledContainerPosts>
         </>

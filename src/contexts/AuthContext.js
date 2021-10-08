@@ -1,6 +1,6 @@
-import { createContext, useContext, useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import { auth } from "../firebase/firebase";
+import { createContext, useContext, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { auth } from '../firebase/firebase';
 
 const AuthContext = createContext();
 
@@ -24,10 +24,10 @@ export function AuthProvider({ children }) {
     auth.currentUser
       .updatePassword(newPassword)
       .then(() => {
-        console.log("succes reset password!");
+        console.log('succes reset password!');
       })
       .catch((error) => {
-        console.error("error when reset password: ", error);
+        console.error('error when reset password: ', error);
       });
   }
 

@@ -1,11 +1,11 @@
-import { createContext, useContext, useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import firebase from "firebase/app";
-import { firestore } from "../firebase/firebase";
-import { useAuth } from "./AuthContext";
-import { sortDateArray, formateDateArray } from "../functions/sortDateArray";
-import { booleanArrayFindObject } from "../functions/booleanArrayFind";
-import { firebaseVars } from "../unchangingVars";
+import { createContext, useContext, useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import firebase from 'firebase/app';
+import { firestore } from '../firebase/firebase';
+import { useAuth } from './AuthContext';
+import { sortDateArray, formateDateArray } from '../functions/sortDateArray';
+import { booleanArrayFindObject } from '../functions/booleanArrayFind';
+import { firebaseVars } from '../unchangingVars';
 
 const FirestoreContext = createContext();
 
@@ -39,6 +39,24 @@ export function FirestoreProvider({ children }) {
 
   useEffect(() => {
     if (currentUser) {
+      postsRef
+        .where(firebaseVars.userId, '==', currentUser.uid)
+        .onSnapshot((snapshot) => {
+          const nonSortedArray = snapshot.docs.map((doc) => {
+            return { ...doc.data(), id: doc.id };
+          });
+          setUserPosts(
+            formateDateArray(
+              sortDateArray(nonSortedArray),
+              firebaseVars.dateFormat
+            )
+          );
+        });
+    }
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (currentUser) {
       getUserPersonalData(currentUser.email);
     }
   }, [currentUser]);
@@ -47,7 +65,7 @@ export function FirestoreProvider({ children }) {
   async function getUserPersonalData(email) {
     setUserPersonalData();
     await usersRef
-      .where("email", "==", email)
+      .where('email', '==', email)
       .limit(1)
       .get()
       .then((querySnapshot) => {
@@ -92,10 +110,10 @@ export function FirestoreProvider({ children }) {
           text: newText,
         })
         .then(() => {
-          console.log("successfully edited post!");
+          console.log('successfully edited post!');
         })
         .catch((error) => {
-          console.error("Error updating ducument: ", error);
+          console.error('Error updating ducument: ', error);
         });
     }
   }
@@ -106,17 +124,17 @@ export function FirestoreProvider({ children }) {
         .doc(post.id)
         .delete()
         .then(() => {
-          console.log("Document succesfully deleted!");
+          console.log('Document succesfully deleted!');
         })
         .catch((error) => {
-          console.log("Error removing document: ", error);
+          console.log('Error removing document: ', error);
         });
     }
   }
 
   function likePost(post) {
     if (currentUser) {
-      if (!booleanArrayFindObject(post.likers, currentUser.uid, "userId")) {
+      if (!booleanArrayFindObject(post.likers, currentUser.uid, 'userId')) {
         postsRef
           .doc(post.id)
           .update({
@@ -127,10 +145,10 @@ export function FirestoreProvider({ children }) {
             }),
           })
           .then(() => {
-            console.log("successfully like it !!");
+            console.log('successfully like it !!');
           })
           .catch((error) => {
-            console.error("Error updating ducument: ", error);
+            console.error('Error updating ducument: ', error);
           });
       } else {
         postsRef
@@ -143,33 +161,32 @@ export function FirestoreProvider({ children }) {
             }),
           })
           .then(() => {
-            console.log("successfully unlike it !!");
+            console.log('successfully unlike it !!');
           })
           .catch((error) => {
-            console.error("Error updating ducument: ", error);
+            console.error('Error updating ducument: ', error);
           });
       }
     }
   }
 
-  function getUserPosts() {
-    if (currentUser) {
-      postsRef
-        .where(firebaseVars.userId, "==", currentUser.uid)
-        .get()
-        .then((querySnapshot) => {
-          const nonSortedArray = querySnapshot.docs.map((doc) => {
-            return { ...doc.data(), id: doc.id };
-          });
-          setUserPosts(
-            formateDateArray(
-              sortDateArray(nonSortedArray),
-              firebaseVars.dateFormat
-            )
-          );
-        });
-    }
-  }
+  // function getUserPosts() {
+  //   if (currentUser) {
+  //     postsRef
+  //       .where(firebaseVars.userId, "==", currentUser.uid)
+  //       .onSnapshot((snapshot) => {
+  //         const nonSortedArray = snapshot.docs.map((doc) => {
+  //           return { ...doc.data(), id: doc.id };
+  //         });
+  //         setUserPosts(
+  //           formateDateArray(
+  //             sortDateArray(nonSortedArray),
+  //             firebaseVars.dateFormat
+  //           )
+  //         );
+  //       });
+  //   }
+  // }
 
   function sendCommentForPost(data) {
     postsRef
@@ -187,10 +204,10 @@ export function FirestoreProvider({ children }) {
             userId: currentUser.uid,
             nick: userPersonalData.nick,
           })
-          .then(() => console.log("succes add coment!!"))
-          .catch((error) => console.error("Error add comment: ", error));
+          .then(() => console.log('succes add coment!!'))
+          .catch((error) => console.error('Error add comment: ', error));
       })
-      .catch((error) => console.error("Error increment coments ", error));
+      .catch((error) => console.error('Error increment coments ', error));
   }
 
   function getCommentsPost(postId, setCommentsFunc) {
@@ -217,8 +234,8 @@ export function FirestoreProvider({ children }) {
         .collection(firebaseVars.comments)
         .doc(data.comment.id)
         .update({ content: data.content })
-        .then(() => console.log("succes edit comment!"))
-        .catch((error) => console.error("error eddit comment: ", error));
+        .then(() => console.log('succes edit comment!'))
+        .catch((error) => console.error('error eddit comment: ', error));
     }
   }
 
@@ -235,13 +252,13 @@ export function FirestoreProvider({ children }) {
             .collection(firebaseVars.comments)
             .doc(comment.id)
             .delete()
-            .then(() => console.log("success delete comment"))
+            .then(() => console.log('success delete comment'))
             .catch((error) =>
-              console.error("error on delete comment: ", error)
+              console.error('error on delete comment: ', error)
             );
         })
         .catch((error) => {
-          console.error("Error on decrement coment:" + error);
+          console.error('Error on decrement coment:' + error);
         });
     }
   }
@@ -252,7 +269,7 @@ export function FirestoreProvider({ children }) {
     getCommentsPost,
     sendCommentForPost,
     deletePost,
-    getUserPosts,
+
     userPosts,
     editPost,
     likePost,

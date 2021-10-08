@@ -1,11 +1,11 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
   height: ${(props) => props.height};
   width: ${(props) => props.width};
   flex-direction: ${(props) => props.direction};
-  flex-wrap: ${(props) => props.wrap && "wrap"};
+  flex-wrap: ${(props) => props.wrap && 'wrap'};
   justify-content: ${(props) => props.jusContent};
   align-items: ${(props) => props.aliItems};
   align-content: ${(props) => props.aliContent};

@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 export const GlobalStyle = createGlobalStyle`
 
@@ -38,7 +38,7 @@ body {
 	line-height: 1;
 	background-color: ${({ theme }) => theme.palette.primary.light};
 	color: ${({ theme }) => theme.palette.primary.contrastText};
-	overflow-y: ${({ state }) => (state.scroll ? "scroll" : "hidden")};	
+	overflow-y: ${({ state }) => (state.scroll ? 'scroll' : 'hidden')};	
 	@media only screen and (min-width: 1366px) { 
 		font-size: 106.25%;
 	}

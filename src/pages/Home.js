@@ -1,11 +1,12 @@
-import { useFirestore } from "../contexts/FirestoreContext";
+import { useFirestore } from '../contexts/FirestoreContext';
+// import { Responsive as ResponsiveGridLayout } from "react-grid-layout";
 
-import NewPostForm from "../components/inputs/NewPostForm";
-import PostCard from "../components/PostCard";
-import StyledContainerPosts from "../components/StyledComponents/StyledContainerPosts";
+import NewPostForm from '../components/inputs/NewPostForm';
+import PostCard from '../components/PostCard';
+import StyledContainerPosts from '../components/StyledComponents/StyledContainerPosts';
 
-import { Container } from "../components/containers/flexbox";
-import styled from "styled-components";
+import { Container } from '../components/containers/flexbox';
+import styled from 'styled-components';
 
 const StyledNewPostForm = styled(NewPostForm)`
   width: 95%;
@@ -24,6 +25,18 @@ const StyledMaxWidth = styled.div`
   }
 `;
 
+// const StyledGrid = styled.div`
+//   width: 1250px;
+//   display: grid;
+//   grid-template-columns: 33.333% 33.333% 33.333%;
+//   grid-auto-rows: min-content;
+//   align-items: start;
+//   > * {
+//     margin-top: 10px;
+//   }
+// `;
+// const ResponsiveGridLayout = WidthProvider(Responsive);
+
 function Home() {
   const { allPosts } = useFirestore();
 
@@ -33,6 +46,15 @@ function Home() {
         <Container jusContent="center">
           <StyledNewPostForm />
         </Container>
+        {/* <ResponsiveGridLayout
+          className="layout"
+          breakpoints={{ lg: 1200, sm: 768, xs: 480 }}
+          cols={{ lg: 1, sm: 2, xs: 1 }}
+        > */}
+        {/* <StyledGrid>
+          
+        </StyledGrid> */}
+        {/* </ResponsiveGridLayout> */}
         <StyledContainerPosts
           wrap="true"
           aliItems="flex-start"

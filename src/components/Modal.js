@@ -1,8 +1,8 @@
-import { useRef } from "react";
-import PropTypes from "prop-types";
-import { useOnClickOutside } from "../hooks/useOnClickOutside";
+import { useRef } from 'react';
+import PropTypes from 'prop-types';
+import { useOnClickOutside } from '../hooks/useOnClickOutside';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const StyledModal = styled.div`
   position: fixed;

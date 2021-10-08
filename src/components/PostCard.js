@@ -1,29 +1,30 @@
-import { useState, useEffect, useContext } from "react";
-import { useFirestore } from "../contexts/FirestoreContext";
-import { useAuth } from "../contexts/AuthContext";
-import PropTypes from "prop-types";
-import { booleanArrayFindObject } from "../functions/booleanArrayFind";
-import CommentsBox from "./CommentsBox";
-import EditPostForm from "./inputs/EditPostForm";
-import Modal from "./Modal";
-import { AppSatateContext } from "../contexts/AppStateContext";
-import { appStateVars } from "../unchangingVars";
+import { useState, useEffect, useContext } from 'react';
+import { useFirestore } from '../contexts/FirestoreContext';
+import { useAuth } from '../contexts/AuthContext';
+import PropTypes from 'prop-types';
+import { booleanArrayFindObject } from '../functions/booleanArrayFind';
+import CommentsBox from './CommentsBox';
+import EditPostForm from './inputs/EditPostForm';
+import Modal from './Modal';
+import { AppSatateContext } from '../contexts/AppStateContext';
+import { appStateVars } from '../unchangingVars';
+import { Container } from './containers/flexbox';
 
-import Card from "@material-ui/core/Card";
-import CardContent from "@material-ui/core/CardContent";
-import Typography from "@material-ui/core/Typography";
-import CardActions from "@material-ui/core/CardActions";
-import CardHeader from "@material-ui/core/CardHeader";
-import IconButton from "@material-ui/core/IconButton";
-import { makeStyles } from "@material-ui/styles";
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
+import CardActions from '@material-ui/core/CardActions';
+import CardHeader from '@material-ui/core/CardHeader';
+import IconButton from '@material-ui/core/IconButton';
+import { makeStyles } from '@material-ui/styles';
 
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
-import ChatBubbleIcon from "@material-ui/icons/ChatBubble";
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,7 +34,9 @@ const useStyles = makeStyles((theme) => ({
 
 const StyledCard = styled(Card)`
   width: 100%;
+  height: 320px;
   border-radius: 0 !important;
+  flex: 1 auto;
   hr {
     border: 0;
     height: 1px;
@@ -48,6 +51,7 @@ const StyledCard = styled(Card)`
   .card-content {
     padding-top: 0 !important;
     padding-bottom: 0 !important;
+    max-height: 100%;
     margin-top: 0px;
 
     .post {
@@ -59,7 +63,7 @@ const StyledCard = styled(Card)`
     }
   }
   @media only screen and (min-width: 480px) {
-    max-width: calc(1200px / 4);
+    max-width: 370px;
     border-radius: 4px !important;
     .card-content {
       padding-bottom: 10px !important;
@@ -105,7 +109,7 @@ function PostCard({ post, ...rest }) {
         ) : (
           <Typography
             className="post"
-            style={{ wordWrap: "break-word" }}
+            style={{ wordWrap: 'break-word', height: '100px' }}
             color="textPrimary"
             component="p"
             variant="body1"
@@ -115,53 +119,73 @@ function PostCard({ post, ...rest }) {
         )}
         <hr />
         <CardActions>
-          <IconButton
-            color={
-              post.likers &&
-              booleanArrayFindObject(post.likers, currentUser.uid, "userId")
-                ? "inherit"
-                : "primary"
-            }
-            onClick={handleLike}
-          >
-            {post.likers &&
-            booleanArrayFindObject(post.likers, currentUser.uid, "userId") ? (
-              <FavoriteIcon />
-            ) : (
-              <FavoriteBorderIcon />
-            )}
-          </IconButton>
-          <Typography
-            color={
-              post.likers &&
-              booleanArrayFindObject(post.likers, currentUser.uid, "userId")
-                ? "inherit"
-                : "primary"
-            }
-            variant="button"
-          >
-            {post.likes}
-          </Typography>
-          <IconButton color="primary" onClick={handleOpenCommentBox}>
-            <ChatBubbleIcon />
-          </IconButton>
-          <Typography color="primary" variant="button">
-            {post.coments}
-          </Typography>
+          {!edited && (
+            <Container jusContent="space-around" width="100%" aliItems="center">
+              <div>
+                <IconButton
+                  color={
+                    post.likers &&
+                    booleanArrayFindObject(
+                      post.likers,
+                      currentUser.uid,
+                      'userId'
+                    )
+                      ? 'inherit'
+                      : 'primary'
+                  }
+                  onClick={handleLike}
+                >
+                  {post.likers &&
+                  booleanArrayFindObject(
+                    post.likers,
+                    currentUser.uid,
+                    'userId'
+                  ) ? (
+                    <FavoriteIcon />
+                  ) : (
+                    <FavoriteBorderIcon />
+                  )}
+                </IconButton>
+                <Typography
+                  color={
+                    post.likers &&
+                    booleanArrayFindObject(
+                      post.likers,
+                      currentUser.uid,
+                      'userId'
+                    )
+                      ? 'inherit'
+                      : 'primary'
+                  }
+                  variant="button"
+                >
+                  {post.likes}
+                </Typography>
+                <IconButton color="primary" onClick={handleOpenCommentBox}>
+                  <ChatBubbleIcon />
+                </IconButton>
+                <Typography color="primary" variant="button">
+                  {post.coments}
+                </Typography>
+              </div>
+              <Modal open={openCommentBox} setOpen={setOpenCommentBox}>
+                <CommentsBox post={post} setOpen={setOpenCommentBox} />
+              </Modal>
 
-          <Modal open={openCommentBox} setOpen={setOpenCommentBox}>
-            <CommentsBox post={post} setOpen={setOpenCommentBox} />
-          </Modal>
-
-          {currentUser && currentUser.uid === post.userId && (
-            <div>
-              <IconButton color="primary" onClick={() => setEdited(!edited)}>
-                <EditIcon />
-              </IconButton>
-              <IconButton color="primary" onClick={handleDelete}>
-                <DeleteIcon />
-              </IconButton>
-            </div>
+              {currentUser && currentUser.uid === post.userId && (
+                <>
+                  <IconButton
+                    color="primary"
+                    onClick={() => setEdited(!edited)}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton color="primary" onClick={handleDelete}>
+                    <DeleteIcon />
+                  </IconButton>
+                </>
+              )}
+            </Container>
           )}
         </CardActions>
       </CardContent>

@@ -1,17 +1,17 @@
-import { useState, useContext } from "react";
-import { useFormik } from "formik";
-import PropTypes from "prop-types";
-import * as Yup from "yup";
-import { useAuth } from "../../contexts/AuthContext";
-import { AppSatateContext } from "../../contexts/AppStateContext";
-import { appStateVars } from "../../unchangingVars";
+import { useState, useContext } from 'react';
+import { useFormik } from 'formik';
+import PropTypes from 'prop-types';
+import * as Yup from 'yup';
+import { useAuth } from '../../contexts/AuthContext';
+import { AppSatateContext } from '../../contexts/AppStateContext';
+import { appStateVars } from '../../unchangingVars';
 
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { Container } from "../containers/flexbox";
-import styled from "styled-components";
+import { Container } from '../containers/flexbox';
+import styled from 'styled-components';
 
 const StyledForm = styled.form`
   width: 20rem;
@@ -27,38 +27,38 @@ const StyledContainer = styled(Container)`
 
 const validationSchema = Yup.object({
   password: Yup.string()
-    .min(6, "Must be 6 characters or more")
-    .max(20, "Must be 20 characters or less"),
+    .min(6, 'Must be 6 characters or more')
+    .max(20, 'Must be 20 characters or less'),
 });
 function LoginForm({ handleIsOpenFunc }) {
   const { resetPassword } = useAuth();
   const [, dispatch] = useContext(AppSatateContext);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: {
-      password: "",
+      password: '',
     },
     validationSchema,
     onSubmit: async (values) => {
       try {
-        setError("");
+        setError('');
         setLoading(true);
         await resetPassword(values.password);
         dispatch({
           type: appStateVars.ALLERT,
-          message: "Succes reset password!",
+          message: 'Succes reset password!',
         });
         dispatch({ type: appStateVars.SHOW_ALLERT });
       } catch {
-        setError("Failed to reset password. Try relog!");
+        setError('Failed to reset password. Try relog!');
         dispatch({ type: appStateVars.ALLERT, message: error, isError: true });
         dispatch({ type: appStateVars.SHOW_ALLERT });
       }
       handleIsOpenFunc(false);
       setLoading(false);
-      values.password = "";
+      values.password = '';
       setTimeout(() => {
         dispatch({ type: appStateVars.DONT_SHOW_ALLERT });
       }, 5000);
@@ -77,7 +77,7 @@ function LoginForm({ handleIsOpenFunc }) {
           error={
             formik.touched.password && formik.errors.password ? true : false
           }
-          {...formik.getFieldProps("password")}
+          {...formik.getFieldProps('password')}
           helperText={
             formik.touched.password && formik.errors.password
               ? formik.errors.password
@@ -87,7 +87,7 @@ function LoginForm({ handleIsOpenFunc }) {
 
         <Container width="80%" jusContent="space-around">
           <Button color="primary" variant="contained" type="submit">
-            {loading ? <CircularProgress /> : "Ok"}
+            {loading ? <CircularProgress /> : 'Ok'}
           </Button>
           <Button
             onClick={() => handleIsOpenFunc(false)}

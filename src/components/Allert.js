@@ -1,15 +1,15 @@
-import { useContext, useRef } from "react";
+import { useContext, useRef } from 'react';
 
-import styled from "styled-components";
-import { Container } from "./containers/flexbox";
-import { CSSTransition } from "react-transition-group";
+import styled from 'styled-components';
+import { Container } from './containers/flexbox';
+import { CSSTransition } from 'react-transition-group';
 
-import Typography from "@material-ui/core/Typography";
+import Typography from '@material-ui/core/Typography';
 
-import { AppSatateContext } from "../contexts/AppStateContext";
+import { AppSatateContext } from '../contexts/AppStateContext';
 
-import ErrorIcon from "@material-ui/icons/Error";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import ErrorIcon from '@material-ui/icons/Error';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 const StyledAllert = styled(Container)`
   z-index: 500000;
@@ -21,22 +21,22 @@ const StyledAllert = styled(Container)`
   }
   .message-show-enter-active {
     opacity: 1;
-    transition: opacity 300ms;
+    transition: opacity 50ms;
   }
   .message-show-exit {
     opacity: 1;
   }
   .message-show-exit-active {
     opacity: 0;
-    transition: opacity 300ms;
+    transition: opacity 50ms;
   }
 `;
 
 const StyledMessageWrapper = styled(Container)`
   background-color: ${({ isError }) =>
-    isError ? "rgba(245, 84, 72, 0.6)" : "rgba(101, 186, 104, 0.6)"};
+    isError ? 'rgba(245, 84, 72, 0.6)' : 'rgba(101, 186, 104, 0.6)'};
   padding: 10px;
-  border: 1px solid ${({ isError }) => (isError ? "#f55448" : "#65ba68")};
+  border: 1px solid ${({ isError }) => (isError ? '#f55448' : '#65ba68')};
   border-radius: 10px;
   max-width: 300px;
   > *:first-child {
@@ -53,7 +53,7 @@ function Allert() {
       <CSSTransition
         nodeRef={nodeRef}
         in={state.isMessage}
-        timeout={400}
+        timeout={60}
         classNames="message-show"
         unmountOnExit
       >

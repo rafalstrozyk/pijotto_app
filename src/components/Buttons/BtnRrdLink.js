@@ -1,6 +1,6 @@
-import PropTypes from "prop-types";
-import { useHistory } from "react-router-dom";
-import Button from "@material-ui/core/Button";
+import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
 
 function BtnRrdLink({ children, link, functionOnClick, ...rest }) {
   const history = useHistory();
@@ -23,7 +23,7 @@ BtnRrdLink.propTypes = {
 };
 
 BtnRrdLink.defaultProps = {
-  link: "/",
+  link: '/',
   functionOnClick: () => {
     return;
   },
