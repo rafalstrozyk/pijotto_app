@@ -19,6 +19,8 @@ const reducer = (state, action) => {
       return { ...state, isMessage: true };
     case appStateVars.DONT_SHOW_ALLERT:
       return { ...state, isMessage: false };
+    case appStateVars.DARK_MODE_TOGLE:
+      return { ...state, darkMode: !state.darkMode };
     default:
       return state;
   }
@@ -29,6 +31,7 @@ const initialState = {
   message: '',
   isMessage: false,
   isError: false,
+  darkMode: false,
 };
 
 export const AppSatateContext = createContext({

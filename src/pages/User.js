@@ -38,7 +38,7 @@ function User() {
   }
 
   return (
-    <StyledContainer aliItems="center" direction="column">
+    <StyledContainer aliItems="center" jusContent="center" direction="column">
       {currentUser && userPersonalData && (
         <>
           <div>
@@ -67,9 +67,10 @@ function User() {
             All my posts
           </Button>
           <StyledContainerPosts
+            width="100%"
             wrap="true"
             aliItems="flex-start"
-            jusContent="flex-start"
+            jusContent="center"
           >
             {isOpenUserPostsList &&
               userPosts.length > 0 &&

@@ -3,13 +3,6 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Container } from '../containers/flexbox';
 
-const StyledPosition = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
-
 const StyledBox = styled.div`
   background-color: ${({ theme }) => theme.palette.secondary.main};
   width: 100vw;
@@ -22,13 +15,13 @@ const StyledBox = styled.div`
 `;
 function StyledWrapperPosition({ children }) {
   return (
-    <StyledPosition>
+    <Container width="100%" jusContent="center" aliItes="center">
       <StyledBox>
         <Container direction="column" jusContent="center" aliItems="center">
           {children}
         </Container>
       </StyledBox>
-    </StyledPosition>
+    </Container>
   );
 }
 

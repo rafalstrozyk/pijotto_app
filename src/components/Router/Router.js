@@ -5,10 +5,10 @@ import Root from './Root';
 
 const Router = ({ children }) => (
   <BrowserRouter>
-    {children}
-    <div style={{ marginTop: '100px' }}>
+    <div style={{ gridArea: 'content' }}>
       <Root />
     </div>
+    {children}
   </BrowserRouter>
 );
 

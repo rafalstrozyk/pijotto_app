@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 
-import ComponentsWrapperScrollContext from './components/ComponentsWrapperScrollContext';
+import ContainerStateForGlobalStyle from './components/ContainerStateForGlobalStyle';
 import Router from './components/Router/Router';
 import Providers from './components/providers/Providers';
 import Navbar from './components/Navigation/Navbar';
 import Allert from './components/Allert';
+import Footer from './components/Footer';
+import Background from './components/Background';
 
 const StyledNavbar = styled(Navbar)`
   position: fixed;
@@ -19,8 +21,10 @@ function App() {
       <Router>
         <StyledNavbar />
         <Allert />
+        <Footer />
       </Router>
-      <ComponentsWrapperScrollContext />
+      <ContainerStateForGlobalStyle />
+      <Background />
     </Providers>
   );
 }

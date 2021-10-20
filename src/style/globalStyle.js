@@ -33,7 +33,12 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+
+* {
+	transition: color .4s ease, background-color .4s ease;
+}
 body {
+	
 	font-size: 87.5%;
 	line-height: 1;
 	background-color: ${({ theme }) => theme.palette.primary.light};
@@ -66,6 +71,14 @@ table {
 }
 
 #root {
+	min-height: 100vh;
+	display: grid;
+	grid-template-rows:64px auto 200px;
+	row-gap: 20px;
+	grid-template-areas: 
+		"navbar"
+		"content"
+		"footer";
 	width: 100%;
 	height: 100%;
 }

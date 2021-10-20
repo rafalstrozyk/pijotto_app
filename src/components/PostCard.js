@@ -43,7 +43,7 @@ const StyledCard = styled(Card)`
     background-image: linear-gradient(
       to right,
       rgba(55, 150, 131, 0),
-      rgba(55, 150, 131, 0.75),
+      ${({ theme }) => theme.myStyle.shadows},
       rgba(55, 150, 131, 0)
     );
   }

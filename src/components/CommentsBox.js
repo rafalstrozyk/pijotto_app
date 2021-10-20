@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useFirestore } from '../contexts/FirestoreContext';
 import NewCommentForm from './inputs/NewCommentForm';
 import Comment from './Comment';
+import svg4 from '../svg/4.svg';
 
 import styled from 'styled-components';
 import { Container } from './containers/flexbox';
@@ -27,7 +28,11 @@ const useStyles = makeStyles(() => ({
 const StyledCommentsBox = styled.div`
   background-color: ${({ theme }) => theme.palette.secondary.main};
   color: ${({ theme }) => theme.palette.secondary.contrastText};
-  max-width: 1200px;
+  background-repeat: no-repeat;
+  background-size: 60%;
+  background-position: 0% 100%;
+  background-image: url(${svg4});
+  /* max-width: 1200px; */
   width: 100vw;
   border-radius: 10px;
   padding: 25px;
