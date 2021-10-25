@@ -13,14 +13,14 @@ const StyledNewPostForm = styled(NewPostForm)`
   background-color: ${({ theme }) => theme.palette.secondary.main};
   padding: 10px;
   border-radius: 10px;
-  @media only screen and (min-width: 480px) {
+  @media handheld, only screen and (min-width: 480px) {
     width: 100%;
     max-width: 500px;
   }
 `;
 const StyledMaxWidth = styled.div`
   width: 100%;
-  @media only screen and (min-width: 480px) {
+  @media handheld, only screen and (min-width: 480px) {
     max-width: 80vw;
   }
 `;

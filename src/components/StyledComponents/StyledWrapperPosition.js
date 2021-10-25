@@ -7,7 +7,7 @@ const StyledBox = styled.div`
   background-color: ${({ theme }) => theme.palette.secondary.main};
   width: 100vw;
 
-  @media only screen and (min-width: 480px) {
+  @media handheld, only screen and (min-width: 480px) {
     padding: 20px;
     border-radius: 20px;
     max-width: 500px;

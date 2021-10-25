@@ -39,19 +39,19 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	
-	font-size: 87.5%;
+	font-size: 87.5% !important;
 	line-height: 1;
 	background-color: ${({ theme }) => theme.palette.primary.light};
 	color: ${({ theme }) => theme.palette.primary.contrastText};
 	overflow-y: ${({ state }) => (state.scroll ? 'scroll' : 'hidden')};	
-	@media only screen and (min-width: 1366px) { 
-		font-size: 106.25%;
+	@media handheld, only screen and (min-width: 1366px) { 
+		font-size: 106.25% !important;
 	}
-	@media only screen and (min-width: 768px) { 
-		font-size: 100%;
+	@media handheld, only screen and (min-width: 768px) { 
+		font-size: 100% !important;
 	}
-	@media only screen and (min-width: 414px) { 
-		font-size: 93.75%;
+	@media handheld, only screen and (min-width: 414px) { 
+		font-size: 93.75% !important;
 	}
 }
 ol, ul {
@@ -72,6 +72,13 @@ table {
 
 #root {
 	min-height: 100vh;
+	min-width: 0;
+	width: ${({ size }) => {
+    size ? `${size.width}px` : '100%';
+  }};
+	height: ${({ size }) => {
+    size ? `${size.height}px` : '100%';
+  }};
 	display: grid;
 	grid-template-rows:64px auto 200px;
 	row-gap: 20px;
@@ -79,7 +86,6 @@ table {
 		"navbar"
 		"content"
 		"footer";
-	width: 100%;
-	height: 100%;
+	
 }
 `;

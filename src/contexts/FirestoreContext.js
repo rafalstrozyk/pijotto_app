@@ -170,24 +170,6 @@ export function FirestoreProvider({ children }) {
     }
   }
 
-  // function getUserPosts() {
-  //   if (currentUser) {
-  //     postsRef
-  //       .where(firebaseVars.userId, "==", currentUser.uid)
-  //       .onSnapshot((snapshot) => {
-  //         const nonSortedArray = snapshot.docs.map((doc) => {
-  //           return { ...doc.data(), id: doc.id };
-  //         });
-  //         setUserPosts(
-  //           formateDateArray(
-  //             sortDateArray(nonSortedArray),
-  //             firebaseVars.dateFormat
-  //           )
-  //         );
-  //       });
-  //   }
-  // }
-
   function sendCommentForPost(data) {
     postsRef
       .doc(data.postId)

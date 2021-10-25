@@ -32,7 +32,7 @@ function Footer() {
           height="80%"
         >
           <Typography variant="h5">Pijjotto</Typography>
-          <Container wrap width="40vw">
+          <Container wrap="true" width="40vw">
             <BtnLinkRouterDom color="secondary" link="/">
               Home
             </BtnLinkRouterDom>

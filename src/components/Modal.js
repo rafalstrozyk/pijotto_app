@@ -8,16 +8,16 @@ const StyledModal = styled.div`
   position: fixed;
   z-index: 5000;
   background-color: rgba(34, 34, 34, 0.5);
-  width: 110vw;
-  height: 110vh;
+  width: 100vw;
+  height: 100vh;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
   display: flex;
   justify-content: center;
-  align-items: baseline;
+  align-items: center;
   > * {
-    @media only screen and (min-width: 850px) {
+    @media handheld, only screen and (min-width: 850px) {
       margin-top: 15vh;
     }
   }

@@ -1,17 +1,17 @@
 import { createTheme } from '@material-ui/core/styles';
 
-const typography = {
-  fontSize: 14,
-  '@media only screen and (min-width: 1366px)': {
-    fontSize: 17,
-  },
-  '@media only screen and (min-width: 768px)': {
-    fontSize: 16,
-  },
-  '@media only screen and (min-width: 414px)': {
-    fontSize: 15,
-  },
-};
+// const typography = {
+//   fontSize: 14,
+//   '@media handheld, only screen and (min-width: 1366px)': {
+//     fontSize: 17,
+//   },
+//   '@media handheld, only screen and (min-width: 768px)': {
+//     fontSize: 16,
+//   },
+//   '@media handheld, only screen and (min-width: 414px)': {
+//     fontSize: 15,
+//   },
+// };
 
 export const theme = createTheme({
   palette: {
@@ -32,7 +32,7 @@ export const theme = createTheme({
       secondary: '#5cdb95',
     },
   },
-  typography,
+  // typography,
   myStyle: {
     shadows: 'rgba(55, 150, 131, 0.75)',
   },
@@ -57,7 +57,7 @@ export const darkTheme = createTheme({
       secondary: '#423F3E',
     },
   },
-  typography,
+  // typography,
   myStyle: {
     shadows: 'rgba(66,63,62,0.75)',
   },

@@ -23,12 +23,6 @@ function User() {
   const [isOpenResetPasswordForm, setIsOpenResetPasswordForm] = useState(false);
   const [isOpenUserPostsList, setIsOpenUserPostsList] = useState(false);
 
-  // useEffect(() => {
-  //   if (isOpenUserPostsList && userPosts) {
-  //     getUserPosts();
-  //   }
-  // }, [isOpenUserPostsList, getUserPosts, userPosts]);
-
   function handleOpenForm() {
     setIsOpenResetPasswordForm(true);
   }

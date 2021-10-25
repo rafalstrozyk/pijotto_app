@@ -62,7 +62,7 @@ const StyledCard = styled(Card)`
       margin-top: 5px;
     }
   }
-  @media only screen and (min-width: 480px) {
+  @media handheld, only screen and (min-width: 480px) {
     max-width: 370px;
     border-radius: 4px !important;
     .card-content {

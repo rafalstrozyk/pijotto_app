@@ -22,7 +22,7 @@ const StyledContainerForEditButtons = styled.div`
   justify-content: end;
 
   align-items: center;
-  @media only screen and (max-width: 480px) {
+  @media handheld, only screen and (max-width: 480px) {
     width: 40px;
   }
 `;

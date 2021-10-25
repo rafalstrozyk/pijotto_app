@@ -4,6 +4,7 @@ import { useFirestore } from '../contexts/FirestoreContext';
 import NewCommentForm from './inputs/NewCommentForm';
 import Comment from './Comment';
 import svg4 from '../svg/4.svg';
+import { useWindowSize } from '../hooks/useWindowSize';
 
 import styled from 'styled-components';
 import { Container } from './containers/flexbox';
@@ -33,10 +34,10 @@ const StyledCommentsBox = styled.div`
   background-position: 0% 100%;
   background-image: url(${svg4});
   /* max-width: 1200px; */
-  width: 100vw;
+  width: ${({ size }) => `${size.width}px`};
+  height: ${({ size }) => `${size.height}px`};
   border-radius: 10px;
   padding: 25px;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -53,7 +54,12 @@ const StyledCommentsBox = styled.div`
     }
   }
 
-  @media only screen and (min-width: 850px) {
+  /* @media handheld, only screen and (max-width: 480px) {
+    width: 140vw;
+    height: 140vh;
+  } */
+
+  @media handheld, only screen and (min-width: 850px) {
     width: 800px;
     max-height: 80vh;
     > * {
@@ -63,6 +69,7 @@ const StyledCommentsBox = styled.div`
 `;
 
 function CommentsBox({ post, setOpen }) {
+  const size = useWindowSize();
   const classes = useStyles();
   const { getCommentsPost } = useFirestore();
   const [postComments, setPostComments] = useState([]);
@@ -76,7 +83,7 @@ function CommentsBox({ post, setOpen }) {
   }
 
   return (
-    <StyledCommentsBox>
+    <StyledCommentsBox size={size}>
       <Container jusContent="space-between" aliItems="center">
         <Typography variant="h6" gutterBottom>
           {post.nick}
