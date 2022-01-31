@@ -56,7 +56,11 @@ function LoginForm() {
         history.push('/');
       } catch {
         setError('Failed to log in');
-        dispatch({ type: appStateVars.ALLERT, message: error, isError: true });
+        dispatch({
+          type: appStateVars.ALLERT,
+          message: 'Failed to log in',
+          isError: true,
+        });
         dispatch({ type: appStateVars.SHOW_ALLERT });
       }
       setLoading(false);
@@ -68,7 +72,7 @@ function LoginForm() {
   return (
     <StyledForm onSubmit={formik.handleSubmit}>
       <StyledContainer direction="column" jusContent="center" aliItems="center">
-        {error && <p>{error}</p>}
+        {error && <p style={{ color: 'red' }}>{error}</p>}
         <TextField
           fullWidth
           color="primary"
